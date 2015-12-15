@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 public class testesUnitarios {
     
     public static void testeRetornaNumLinhasFicheiro() throws FileNotFoundException {
-        File ficheiro1 = new File("testeRetornaNumLinhasFicheiro1");
-        File ficheiro2 = new File("testeRetornaNumLinhasFicheiro2");
+        File ficheiro1 = new File("testeRetornaNumLinhasFicheiro1.txt");
+        File ficheiro2 = new File("testeRetornaNumLinhasFicheiro2.txt");
         int numeroLinhas = Simplex.retornaNumLinhasFicheiro(ficheiro1.toString());
         if (numeroLinhas == 6)
         {

@@ -6,12 +6,13 @@ import java.util.Scanner;
 
 public class Simplex {
 
-    public static void main(String ficheiroInput, String ficheiroOutput) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {
+        testesUnitarios.testeRetornaNumLinhasFicheiro();
         System.out.println("Insira o nome do ficheiro: ");
         Scanner ler = new Scanner(System.in);
-        int numLinhas = retornaNumLinhasFicheiro(ler.toString());
-        System.out.println(numLinhas);
-        testesUnitarios.testeRetornaNumLinhasFicheiro();
+        int numLinhas = retornaNumLinhasFicheiro(ler.next());
+        
+        
     }
 
     /**
