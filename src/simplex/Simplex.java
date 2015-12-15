@@ -1,35 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package simplex;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-/**
- *
- * @author fabiopinto
- */
 public class Simplex {
-    public static void main(String[] args) {
+    public static void main() throws FileNotFoundException{
+        System.out.println("Insira o nome do ficheiro: ");
         Scanner ler = new Scanner(System.in);
-        lerFicheiro(ler);
+        int numLinhas=retornaNumLinhasFicheiro(ler.toString());
+        System.out.println(numLinhas);
     }
     
-    teste
-    public static String[] lerFicheiro(String ficheiro) throws FileNotFoundException {
+    public static int retornaNumLinhasFicheiro(String ficheiro) throws FileNotFoundException {
         Scanner ler = new Scanner(new File(ficheiro));
         int numeroLinhas = 0;
-        while (ler.hasNextLine() && numeroLinhas <= 230) {
+        while (ler.hasNextLine()) {
             String aux = ler.nextLine();
             if (!aux.isEmpty()) {
                 numeroLinhas++;
             }
         }
-        
-
+        return numeroLinhas;
     }
+    
+    
+    
 }
