@@ -19,7 +19,7 @@ public class Simplex {
         lerFicheiro(ler);
     }
     
-    
+    teste
     public static String[] lerFicheiro(String ficheiro) throws FileNotFoundException {
         Scanner ler = new Scanner(new File(ficheiro));
         int numeroLinhas = 0;
