@@ -4,7 +4,7 @@ package simplex;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class testesUnitarios {
+public class TestesUnitarios {
     
     public static void testeRetornaNumLinhasFicheiro() throws FileNotFoundException {
         File ficheiro1 = new File("testeRetornaNumLinhasFicheiro1.txt");
@@ -28,6 +28,10 @@ public class testesUnitarios {
             System.out.println("0 - testeReturnaNumLinhasFicheiro2");
         }
         
+    }
+    
+    public static void executarTestes() throws FileNotFoundException {
+        testeRetornaNumLinhasFicheiro();
     }
     
 }

@@ -5,20 +5,23 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Simplex {
-
+    public static String nomeFicheiroEntrada;
+    public static String nomeFicheiroSaida;
     public static void main(String[] args) throws FileNotFoundException {
-        testesUnitarios.testeRetornaNumLinhasFicheiro();
-        System.out.println("Insira o nome do ficheiro: ");
-        Scanner ler = new Scanner(System.in);
-        int numLinhas = retornaNumLinhasFicheiro(ler.next());
-        
+        //TestesUnitarios.executarTestes();
+        nomeFicheiroEntrada = args[0];
+        nomeFicheiroSaida = args[1];
+        System.out.println(nomeFicheiroEntrada);
+        System.out.println(nomeFicheiroSaida);
+        int numLinhas = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
+        System.out.println(numLinhas);
         
     }
 
     /**
      *
-     * @param ficheiro
-     * @return
+     * @param String ficheiro
+     * @return int numeroLinhas
      * @throws FileNotFoundException
      */
     public static int retornaNumLinhasFicheiro(String ficheiro) throws FileNotFoundException {
