@@ -49,3 +49,32 @@ public class Simplex {
         return colunaPivot;
 
 }
+    public static int[] procurarVariavelSaida(int numeroLinhas, int [][]matriz, int colunaPivot){
+    int pivot []= new int [3];
+    pivot[3]= colunaPivot;
+    for (int i=0; i<numeroLinhas-2; i++){
+        double temp=((matriz[i][numeroLinhas+1])/(matriz[i][colunaPivot]));
+        for (int j=i+1; j<numeroLinhas-1; j++){      
+            double aux= ((matriz[j][numeroLinhas+1])/(matriz[j][colunaPivot]));
+           
+       if(temp > 0 && aux>0){
+               if (temp < aux){
+                   pivot[1]=i;
+                   pivot[0]=matriz[i][colunaPivot];
+               }else { 
+                    pivot[1]=j;
+                   pivot[0]=matriz[j][colunaPivot];
+               }
+           } else { if(temp>0){
+                pivot[1]=i;
+                pivot[0]=matriz[i][colunaPivot];    
+       } if (aux >0){
+                   pivot[1]=j;
+                   pivot[0]=matriz[j][colunaPivot];
+       }     
+    } 
+    }    
+  } 
+   return pivot;   
+}
+}
