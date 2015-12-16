@@ -12,20 +12,20 @@ public class TestesUnitarios {
         int numeroLinhas = Simplex.retornaNumLinhasFicheiro(ficheiro1.toString());
         if (numeroLinhas == 6)
         {
-            System.out.println("1 - testeReturnaNumLinhasFicheiro1");
+            System.out.println("1 - testeReturnNumLinhasFicheiro1");
         }
         else
         {
-            System.out.println("0 - testeReturnaNumLinhasFicheiro1");
+            System.out.println("0 - testeReturnNumLinhasFicheiro1");
         }
         numeroLinhas = Simplex.retornaNumLinhasFicheiro(ficheiro2.toString());
         if (numeroLinhas == 5)
         {
-            System.out.println("1 - testeReturnaNumLinhasFicheiro2");
+            System.out.println("1 - testeReturnNumLinhasFicheiro2");
         }
         else
         {
-            System.out.println("0 - testeReturnaNumLinhasFicheiro2");
+            System.out.println("0 - testeReturaNumLinhasFicheiro2");
         }
         
     }

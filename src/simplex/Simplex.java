@@ -5,17 +5,21 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Simplex {
+
     public static String nomeFicheiroEntrada;
     public static String nomeFicheiroSaida;
+    public static int numLinhasMatriz;
+    public static int numColunasMatriz;
+    public static String[][] matriz;
     public static void main(String[] args) throws FileNotFoundException {
-        //TestesUnitarios.executarTestes();
+        TestesUnitarios.executarTestes();
         nomeFicheiroEntrada = args[0];
         nomeFicheiroSaida = args[1];
-        System.out.println(nomeFicheiroEntrada);
-        System.out.println(nomeFicheiroSaida);
-        int numLinhas = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
-        System.out.println(numLinhas);
-        
+        int numLinhasFicheiro = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
+        numColunasMatriz = numLinhasFicheiro + 3;
+        numLinhasMatriz = numLinhasFicheiro;
+        System.out.println(numColunasMatriz + " colunas");
+        System.out.println(numLinhasMatriz + " linhas");
     }
 
     /**
