@@ -53,9 +53,16 @@ public class Simplex {
         return colunaPivot;
 
 }
+    /**
+     * cria vector pivot constituido pelo valor do pivot em 0, linha de pivot em 1 e coluna do pivot em 2
+     * @param numeroLinhas
+     * @param matriz
+     * @param colunaPivot
+     * @return 
+     */
     public static int[] procurarVariavelSaida(int numeroLinhas, int [][]matriz, int colunaPivot){
     int pivot []= new int [3];
-    pivot[3]= colunaPivot;
+    pivot[2]= colunaPivot;
     for (int i=0; i<numeroLinhas-1; i++){
         double temp=((matriz[i][numeroLinhas+1])/(matriz[i][colunaPivot]));
         for (int j=i+1; j<numeroLinhas; j++){      
@@ -82,7 +89,12 @@ public class Simplex {
    return pivot;   
 }
     
-    
+ /**
+  * Divide a Linha do pivot pelo seu valor
+  * @param pivot
+  * @param numeroLinhas
+  * @param matriz 
+  */   
  public static void dividirLinhaPivot(int [] pivot, int numeroLinhas, int [][] matriz){
      int linhaPivot =pivot[1];
      for (int i=0; i<numeroLinhas+2;i++){
