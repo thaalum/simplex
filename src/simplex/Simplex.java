@@ -56,9 +56,9 @@ public class Simplex {
     public static int[] procurarVariavelSaida(int numeroLinhas, int [][]matriz, int colunaPivot){
     int pivot []= new int [3];
     pivot[3]= colunaPivot;
-    for (int i=0; i<numeroLinhas-2; i++){
+    for (int i=0; i<numeroLinhas-1; i++){
         double temp=((matriz[i][numeroLinhas+1])/(matriz[i][colunaPivot]));
-        for (int j=i+1; j<numeroLinhas-1; j++){      
+        for (int j=i+1; j<numeroLinhas; j++){      
             double aux= ((matriz[j][numeroLinhas+1])/(matriz[j][colunaPivot]));
            
        if(temp > 0 && aux>0){
@@ -81,4 +81,13 @@ public class Simplex {
   } 
    return pivot;   
 }
+    
+    
+ public static void dividirLinhaPivot(int [] pivot, int numeroLinhas, int [][] matriz){
+     int linhaPivot =pivot[1];
+     for (int i=0; i<numeroLinhas+2;i++){
+         matriz[linhaPivot][i]=(matriz[linhaPivot][i]/pivot[0]);        
+     }     
+ }
+ 
 }
