@@ -40,7 +40,7 @@ public class Simplex {
         return numeroLinhas;
     }
     /**precisa da matriz**/
-    public static int variavelEntrada(int numLinhas, matriz[][]){
+    public static int variavelEntrada(int numLinhas, double matriz[][]){
         double valorMenor = 0;
         int colunaPivot=0;
         int j;
