@@ -35,5 +35,17 @@ public class Simplex {
         }
         return numeroLinhas;
     }
+    /**precisa da matriz**/
+    public static int variavelEntrada(int numLinhas, matriz[][]){
+        double valorMenor = 0;
+        int colunaPivot=0;
+        int j;
+        for (j = 0; j < numLinhas + 2; j++) {
+            if (matriz[numLinhas-1][j] < valorMenor) {
+                valorMenor = matriz[numLinhas-1][j];
+                colunaPivot=j;
+            }
+        }
+        return colunaPivot;
 
 }
