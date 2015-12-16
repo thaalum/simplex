@@ -101,13 +101,8 @@ public class Simplex {
          matriz[linhaPivot][i]=(matriz[linhaPivot][i]/pivot[0]);        
      }     
  }
-     public static double anulalinhaPivot (double matriz [][], int colunaPivot, int numLinhas){
-        int j=0;
-        for (i=linhaPivot; i = linhaPivot ; i++) {
-            for (j=0; j = numLinhas+2; j++){
-                matriz [i][j] = matriz [i][j] / Pivot;
-            }
-               
-        }
-		return novalinhaPivot;
+
+
+     
+     
 }
