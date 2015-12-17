@@ -2,6 +2,7 @@ package simplex;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Formatter;
 import java.util.Scanner;
 
 public class Simplex {
@@ -133,6 +134,23 @@ public class Simplex {
             
         }
     return matriz [][];
+
+    public static void escreveFicheiroTexto(int[][] matriz) throws FileNotFoundException {
+
+        File ficheiro = new File(nomeFicheiroSaida);
+        Formatter escrever = new Formatter(ficheiro);
+        for (int i = 0; i < matriz.length; i++) {
+            escrever.format("\n");
+            for (int j = 0; j < matriz[0].length + 2; j++) {
+                escreveFicheiroMatriz(i, j, matriz[][], ficheiro, escrever); // precisa do metodo que escreve a matriz //
+            }
+            if (i == matriz.length) {
+                escrever.format("\n");
+            }
+        }
+        escrever.format("");
+        escrever.close();
+
     }
      
             
