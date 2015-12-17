@@ -23,7 +23,7 @@ public class Simplex {
         System.out.println(numColunasMatriz + " colunas");
         System.out.println(numLinhasMatriz + " linhas");
         String variaveisBase [] = criarVectorVariaveis(numLinhasFicheiro);
-        String cabecalho [][]= criarCabecalhoMatriz(numLinhasFicheiro);
+        String cabecalho [][]= criarCabecalhoMatriz(numColunasMatriz);
         
     }
 
@@ -166,16 +166,12 @@ public class Simplex {
         }
         
     }      
-    private static void cabecalho(int numeroLinhas) throws FileNotFoundException {
+    private static void cabecalho(String [][] cabecalho) throws FileNotFoundException {
      File ficheiro= new File(nomeFicheiroSaida);
      Formatter escrever = new Formatter( ficheiro);
-     
-        escrever.format("%5s%5s", "X1", "X2");
-        for(int i=1; i<numeroLinhas; i++){
-            String folga="s"+i;
-             escrever.format("%5s", folga);                       
-        }
-        escrever.format("%5s", "b");
+        for(int i=0; i<cabecalho[0].length; i++){          
+             escrever.format("%5s", cabecalho[0][i]);                       
+        }       
         escrever.format("%n");          
     }   
     
@@ -186,14 +182,14 @@ public class Simplex {
             variaveisBase[i] = folga;
         } return variaveisBase;
     }
-      public static String[][] criarCabecalhoMatriz(int numLinhasFicheiro) {
-        String cabecalho[][] = new String[1][numLinhasFicheiro + 2];
+      public static String[][] criarCabecalhoMatriz(int numColunas){
+        String cabecalho[][] = new String[1][numColunas];
         cabecalho[1][0] = "X1";
         cabecalho[1][1] = "X2";
-        cabecalho[1][numLinhasFicheiro + 1] = "b";
-        for (int i = 2; i < numLinhasFicheiro + 1; i++) {
+        cabecalho[1][numColunas-1] = "b";
+        for (int i = 2; i < numColunas-1; i++) {
             String folga = "S" + i;
             cabecalho[1][i] = folga;
-        }
+        } return cabecalho;
     }
 }
