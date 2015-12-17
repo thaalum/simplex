@@ -22,6 +22,9 @@ public class Simplex {
         numLinhasMatriz = numLinhasFicheiro;
         System.out.println(numColunasMatriz + " colunas");
         System.out.println(numLinhasMatriz + " linhas");
+        String variaveisBase [] = criarVectorVariaveis(numLinhasFicheiro);
+        String cabecalho [][]= criarCabecalhoMatriz(numLinhasFicheiro);
+        
     }
 
     /**
@@ -174,6 +177,23 @@ public class Simplex {
         }
         escrever.format("%5s", "b");
         escrever.format("%n");          
-    }    
+    }   
     
+     public static String [] criarVectorVariaveis(int numeroLinhas) {
+        String variaveisBase[] = new String[numeroLinhas - 1];
+        for (int i = 0; i < numeroLinhas - 1; i++) {
+            String folga = "s" + i;
+            variaveisBase[i] = folga;
+        } return variaveisBase;
+    }
+      public static String[][] criarCabecalhoMatriz(int numLinhasFicheiro) {
+        String cabecalho[][] = new String[1][numLinhasFicheiro + 2];
+        cabecalho[1][0] = "X1";
+        cabecalho[1][1] = "X2";
+        cabecalho[1][numLinhasFicheiro + 1] = "b";
+        for (int i = 2; i < numLinhasFicheiro + 1; i++) {
+            String folga = "S" + i;
+            cabecalho[1][i] = folga;
+        }
+    }
 }
