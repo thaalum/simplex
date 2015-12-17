@@ -18,7 +18,7 @@ public class Simplex {
         nomeFicheiroEntrada = args[0];
         nomeFicheiroSaida = args[1];
         int numLinhasFicheiro = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
-        numColunasMatriz = numLinhasFicheiro + 3;
+        numColunasMatriz = numLinhasFicheiro + 2;
         numLinhasMatriz = numLinhasFicheiro;
         System.out.println(numColunasMatriz + " colunas");
         System.out.println(numLinhasMatriz + " linhas");
@@ -163,6 +163,17 @@ public class Simplex {
         }
         
     }      
-        
+    private static void cabecalho(int numeroLinhas) throws FileNotFoundException {
+     File ficheiro= new File(nomeFicheiroSaida);
+     Formatter escrever = new Formatter( ficheiro);
+     
+        escrever.format("%5s%5s", "X1", "X2");
+        for(int i=1; i<numeroLinhas; i++){
+            String folga="s"+i;
+             escrever.format("%5s", folga);                       
+        }
+        escrever.format("%5s", "b");
+        escrever.format("%n");          
+    }    
     
 }
