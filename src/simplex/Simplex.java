@@ -116,10 +116,10 @@ public class Simplex {
         }
     }
 
-    public static void anulaLinhas(double[] pivot, double[][] matriz, int numeroLinhasFicheiro) {
+    public static void anulaLinhas(double[] pivot, double[][] matriz, int numeroLinhasMatriz) {
         double linha = pivot[1];
         int i = 0, j = 0;
-        for (i = 0; i <= numeroLinhasFicheiro; i++) {
+        for (i = 0; i <= numeroLinhasMatriz; i++) {
             /*
             avançar caso i seja = linha Pivot
             if (i = pivot[1]) {
@@ -128,7 +128,7 @@ public class Simplex {
             i++;
             */
               
-            for (j = 0; j <= numeroLinhasFicheiro + 2; j++) {
+            for (j = 0; j <= numeroLinhasMatriz + 2; j++) {
 
                 matriz [linha][j] = (matriz[i][j] * matriz [linha][j] + matriz [i][j]);
                       
@@ -156,10 +156,10 @@ public class Simplex {
 
     }
      
-    public static void imprimematrizconsola (double [][] matriz, int numeroLinhasFicheiro, int numeroColunasFicheiro, int [] variaveisbase) {
+    public static void imprimematrizconsola (double [][] matriz, int numeroLinhasMatriz, int numeroColunasMatriz, int [] variaveisbase) {
         int i=0, j=0;
-        for (i=0; i <= numeroLinhasFicheiro; i++){
-            for (j=0; j<= numeroColunasFicheiro; j++) {
+        for (i=0; i <= numeroLinhasMatriz; i++){
+            for (j=0; j<= numeroColunasMatriz; j++) {
                 System.out.printf("%3.2f", matriz[i][j]);
             }
             System.out.println();
@@ -191,10 +191,13 @@ public class Simplex {
         
         while (cont < 0) {
             /*
-            chamar metodos
-            verificar ordem de entrada dos metodos
+            chama metodos e calcula matriz enquanto não é encontrada solução optima
             */
-           
+            int colunaPivot = variavelEntrada (numLinhasMatriz, matriz);
+            double [] pivot = procurarVariavelSaida (numLinhasMatriz, matriz, colunaPivot );
+            dividirLinhaPivot (pivot, numLinhasMatriz,matriz );
+            anulaLinhas ( pivot, matriz, numLinhasMatriz);
+            escreveFicheiroTexto (matriz);
             
             
             for (j=0; j <= numeroColunasFicheiro; j++){
