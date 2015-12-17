@@ -157,7 +157,7 @@ public class Simplex {
         int i=0, j=0;
         for (i=0; i <= numeroLinhasFicheiro; i++){
             for (j=0; j<= numeroColunasFicheiro; j++) {
-                System.out.printf("%3.2f", matriz[i][j], variaveisbase[i]);
+                System.out.printf("%3.2f", matriz[i][j]);
             }
             System.out.println();
         }
@@ -176,4 +176,18 @@ public class Simplex {
         escrever.format("%n");          
     }    
     
+    
+    public static int verificaLinhaZ (double [][] matriz, int numeroColunasFicheiro, int numeroLinhasFicheiro){
+        
+        int j = 0;
+        double cont = 0;
+        
+        for (j=0; j <= numeroColunasFicheiro; j++){
+            if (matriz[numeroLinhasFicheiro][j] < cont){
+                cont = matriz[numeroLinhasFicheiro][j];
+            }
+        }
+        
+    return -1;
+    }
 }
