@@ -181,10 +181,11 @@ public class Simplex {
     
 
     
-    public static int verificaLinhaZ (double [][] matriz, int numeroColunasFicheiro, int numeroLinhasFicheiro){
+    public static void verificaLinhaZ (double [][] matriz, int numeroColunasFicheiro, int numeroLinhasFicheiro){
         
         int j = 0;
         double cont = 0;
+        
         
         for (j=0; j <= numeroColunasFicheiro; j++){
             if (matriz[numeroLinhasFicheiro][j] < cont){
@@ -192,7 +193,19 @@ public class Simplex {
             }
         }
         
-    return -1;
+        while (cont < 0) {
+            /*
+            chamar metodos
+            verificar ordem de entrada dos metodos
+            */
+           
+            
+            
+            for (j=0; j <= numeroColunasFicheiro; j++){
+                if (matriz[numeroLinhasFicheiro][j] < cont){
+                    cont = matriz[numeroLinhasFicheiro][j];
+        }
+    
     
     }
 
