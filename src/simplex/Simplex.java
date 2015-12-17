@@ -112,7 +112,7 @@ public class Simplex {
         }
     }
 
-    public static double anulaLinhas(double[] pivot, double[][] matriz, int numeroLinhasFicheiro) {
+    public static void anulaLinhas(double[] pivot, double[][] matriz, int numeroLinhasFicheiro) {
         double linha = pivot[1];
         int i = 0, j = 0;
         for (i = 0; i <= numeroLinhasFicheiro; i++) {
@@ -132,10 +132,19 @@ public class Simplex {
             }
             
         }
-    return matriz [][];
+    
     }
      
-            
+    public static void imprimematrizconsola (double [][] matriz, int numeroLinhasFicheiro, int numeroColunasFicheiro, int [] variaveisbase) {
+        int i=0, j=0;
+        for (i=0; i <= numeroLinhasFicheiro; i++){
+            for (j=0; j<= numeroColunasFicheiro; j++) {
+                System.out.printf("%3.2f", matriz[i][j], variaveisbase[i]);
+            }
+            System.out.println();
+        }
+        
+    }      
         
     
 }
