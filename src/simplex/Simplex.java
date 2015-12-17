@@ -135,14 +135,14 @@ public class Simplex {
         }
     }
 
-    public static void escreveFicheiroTexto(int[][] matriz) throws FileNotFoundException {
+    public static void escreveFicheiroTexto(double [][] matriz) throws FileNotFoundException {
 
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever = new Formatter(ficheiro);
         for (int i = 0; i < matriz.length; i++) {
             escrever.format("\n");
             for (int j = 0; j < matriz[0].length + 2; j++) {
-                escreveFicheiroMatriz(i, j, matriz[][], ficheiro, escrever); // precisa do metodo que escreve a matriz //
+              escrever.format("%3.2f",matriz[i][j]);  
             }
             if (i == matriz.length) {
                 escrever.format("\n");
@@ -150,7 +150,6 @@ public class Simplex {
         }
         escrever.format("");
         escrever.close();
-
 
     }
      
