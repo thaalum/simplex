@@ -155,7 +155,7 @@ public class Simplex {
 
     }
      
-    public static void imprimematrizconsola (double [][] matriz, int numeroLinhasFicheiro, int numeroColunasFicheiro, int [] variaveisbase) {
+    public static void imprimematrizconsola (double [][] matriz, int numeroLinhasFicheiro, int numeroColunasFicheiro, String [] variaveisBase) {
         int i=0, j=0;
         for (i=0; i < numeroLinhasFicheiro; i++){
             for (j=0; j< numeroColunasFicheiro; j++) {
@@ -181,13 +181,13 @@ public class Simplex {
     
 
     
-    public static void verificaLinhaZ (double [][] matriz, int numeroColunasFicheiro, int numeroLinhasFicheiro){
+    public static void verificaLinhaZ (double [][] matriz, int numColunasMatriz, int numLinhasMatriz, String []variaveisBase,Sring[][]cabecalho){
         
         int j = 0;
         double cont = 0;              
-        for (j=0; j < numeroColunasFicheiro; j++){
-            if (matriz[numeroLinhasFicheiro][j] < cont){
-                cont = matriz[numeroLinhasFicheiro][j];
+        for (j=0; j < numColunasMatriz; j++){
+            if (matriz[numLinhasMatriz][j] < cont){
+                cont = matriz[numLinhasMatriz][j];
             }
         }
         
@@ -197,15 +197,16 @@ public class Simplex {
             verificar ordem de entrada dos metodos
             */
            int colunaPivot = variavelEntrada (numLinhasMatriz, matriz);
-            double [] pivot = procurarVariavelSaida (numLinhasMatriz, matriz, colunaPivot );
+            double [] pivot = procurarVariavelSaida (numLinhasMatriz, matriz, colunaPivot, variaveisBase, cabecalho);
             dividirLinhaPivot (pivot, numLinhasMatriz,matriz );
             anulaLinhas ( pivot, matriz, numLinhasMatriz);
-            escreveFicheiroTexto (matriz);
+            escreveFicheiroTexto (matriz, cabecalho);
+            imprimematrizconsola (matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
             
             
-            for (j=0; j < numeroColunasFicheiro; j++){
-                if (matriz[numeroLinhasFicheiro][j] < cont){
-                    cont = matriz[numeroLinhasFicheiro][j];
+            for (j=0; j < numColunasMatriz; j++){
+                if (matriz[numLinhasMatriz][j] < cont){
+                    cont = matriz[numLinhasMatriz][j];
         }
     
     
