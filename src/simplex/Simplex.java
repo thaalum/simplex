@@ -259,4 +259,61 @@ public class Simplex {
         int linha = (int) pivot[1];
         variaveisBase[linha] = cabecalho[0][coluna];
     }
+    public static void solucaoBasica(int numeroLinhas, String[] variaveisBase, int numColunas) throws FileNotFoundException {
+        // Escrever solução como (x1,x2,s1,s2.)=(_,_,_,_)
+        File ficheiro = new File(nomeFicheiroSaida);
+        Formatter escrever = new Formatter(ficheiro);
+        escrever.format("%s%5s", "(", "X1,X2");
+        for (int i = 1; i < numeroLinhas; i++) {
+            String folga = "S" + i;
+            escrever.format("%2s", folga);
+        }
+        escrever.format("%4s", ") = ");
+
+        double[] solucao = new double[numeroLinhas];
+        int nEl = 0;
+        int j = 0;
+        while (!variaveisBase[j].equals("X1")
+                && j < variaveisBase.length) {
+            j++;
+        }
+
+        if (j < variaveisBase.length) {
+            solucao[nEl] = matriz[j][numColunas - 1];
+            nEl++;
+        } else {
+            solucao[0] = 0;
+            nEl++;
+
+            while (!variaveisBase[j].equals("X2")
+                    && j < variaveisBase.length) {
+                j++;
+            }
+            
+            if (j < variaveisBase.length) {
+                solucao[nEl] = matriz[j][numColunas - 1];
+                nEl++;
+            } else {
+                solucao[0] = 0;
+                nEl++;
+                for (int i = 1; i < numeroLinhas; i++) {
+                    String folga = "S" + i;
+                    int x = 0;
+                    while (!variaveisBase[x].equals(folga) && x < variaveisBase.length) {
+                        x++;
+                    }
+                    
+                    if (x < variaveisBase.length) {
+                        solucao[nEl] = matriz[x][numColunas - 1];
+                        nEl++;
+                    } else {
+                        solucao[0] = 0;
+                        nEl++;
+                    }
+                    escrever.format("%n");
+                }
+
+            }
+        }
+    }
 }
