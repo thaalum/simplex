@@ -11,7 +11,7 @@ public class Simplex {
     public static String nomeFicheiroSaida;
     public static int numLinhasMatriz;
     public static int numColunasMatriz;
-    public static String[][] matriz;
+    public static double[][] matriz;
 
     public static void main(String[] args) throws FileNotFoundException {
         TestesUnitarios.executarTestes();
@@ -282,7 +282,7 @@ public class Simplex {
             solucao[nEl] = matriz[j][numColunas - 1];
             nEl++;
         } else {
-            solucao[0] = 0;
+            solucao[nEl] = 0;
             nEl++;
 
             while (!variaveisBase[j].equals("X2")
@@ -307,7 +307,7 @@ public class Simplex {
                         solucao[nEl] = matriz[x][numColunas - 1];
                         nEl++;
                     } else {
-                        solucao[0] = 0;
+                        solucao[nEl] = 0;
                         nEl++;
                     }
                     escrever.format("%n");
