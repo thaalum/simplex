@@ -120,15 +120,10 @@ public class Simplex {
     public static void anulaLinhas(double[] pivot, double[][] matriz, int numeroLinhasMatriz, int numeroColunasMatriz) {
         int linha = (int)pivot[1];
         int coluna = (int)pivot[2];
-        int i = 0, j = 0;
+        int i , j;
         for (i = 0; i < numeroLinhasMatriz; i++) {
-            /*
-            avançar caso i seja = linha Pivot
-            if (i = pivot[1]) {
-                continue;
-            }
-            i++;
-             */
+            if ( i == linha)
+                i = i + 1;
 
             for (j = 0; j < numeroColunasMatriz + 2; j++) {
 
@@ -200,7 +195,7 @@ public class Simplex {
            int colunaPivot = variavelEntrada (numLinhasMatriz, matriz);
             double [] pivot = procurarVariavelSaida (numLinhasMatriz, matriz, colunaPivot, variaveisBase, cabecalho);
             dividirLinhaPivot (pivot, numLinhasMatriz,matriz );
-            anulaLinhas ( pivot, matriz, numLinhasMatriz);
+            anulaLinhas ( pivot, matriz, numLinhasMatriz, numColunasMatriz);
             escreveFicheiroTexto (matriz, cabecalho);
             imprimematrizconsola (matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
             
