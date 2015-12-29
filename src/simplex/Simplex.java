@@ -45,6 +45,97 @@ public class Simplex {
         return numeroLinhas;
     }
 
+    public static String[] retornaMatrizTemp(String ficheiro, int numLinhas) throws FileNotFoundException {
+        String[] matrizTemp = new String[numLinhas];
+        Scanner ler = new Scanner(new File(ficheiro));
+        int i = 0;
+        while (ler.hasNextLine()) {
+            String aux = ler.nextLine();
+            if (!aux.isEmpty()) {
+                matrizTemp[i] = aux.replaceAll("\\s", "");
+                matrizTemp[i] = matrizTemp[i].replaceAll("[<|≤]", "=");
+                i++;
+            }
+        }
+        return matrizTemp;
+    }
+
+    public static double[][] preencheMatriz(String[] matrizTemp, int numLinhas) throws FileNotFoundException {
+        double matriz1[][] = new double[numLinhas][numLinhas + 2];
+        matriz1[0][2] = 0.0;
+        matriz1[0][3] = 0.0;
+        matriz1[0][4] = 0.0;
+        matriz1[0][5] = 0.0;
+        matriz1[1][3] = matriz1[1][4] = 0.0;
+        matriz1[2][2] = matriz1[2][4] = 0.0;
+        matriz1[3][2] = matriz1[3][3] = 0.0;
+        matriz1[1][2] = matriz1[2][3] = matriz1[3][4] = 1.0;
+        for (int i = 0; i < numLinhas; i++) {
+            if (i != 0) {
+                for (int l = 0; l < matrizTemp[i].length(); l++) {
+                    if (matrizTemp[i].charAt(l) == '=') {
+                        String valorB = matrizTemp[i].substring(l + 1, matrizTemp[i].length());
+                        matriz1[i][numLinhas + 1] = Double.parseDouble(valorB);
+                    }
+                }
+            }
+            for (int j = 0; j < matrizTemp[i].length(); j++) {
+                if (matrizTemp[i].charAt(j) == 'x' | matrizTemp[i].charAt(j) == 'X') {
+                    int numIncognita = Character.getNumericValue(matrizTemp[i].charAt(j + 1));
+                    if (j == 0) {
+                        if (i == 0) {
+                            matriz1[i][numIncognita - 1] = -1.0;
+                        } else {
+                            matriz1[i][numIncognita - 1] = 1.0;
+                        }
+                    } else if (matrizTemp[i].charAt(j - 1) == '0' & j == 1) {
+                        matriz1[i][numIncognita - 1] = 0.0;
+                    } else if ((matrizTemp[i].charAt(j - 1) == '0') & (matrizTemp[i].charAt(j - 2) == '+' | matrizTemp[i].charAt(j - 2) == '=')) {
+                        matriz1[i][numIncognita - 1] = 0.0;
+                    } else if (matrizTemp[i].charAt(j - 1) == '+' | matrizTemp[i].charAt(j - 1) == '=') {
+                        if (i == 0) {
+                            matriz1[i][numIncognita - 1] = -1.0;
+                        } else {
+                            matriz1[i][numIncognita - 1] = 1.0;
+                        }
+                    } else {
+                        for (int k = j - 1; k >= 0; k--) {
+                            if (k == 0) {
+                                if (i == 0) {
+                                    String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
+                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
+                                } else {
+                                    String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
+                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
+                                }
+                                k = 0;
+                            }
+                            else if (matrizTemp[i].charAt(k) == '+' | matrizTemp[i].charAt(k) == '=') {
+                                if (i == 0) {
+                                    String coefIncognita = matrizTemp[i].substring(k + 1, j);
+                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
+                                } else {
+                                    String coefIncognita = matrizTemp[i].substring(k + 1, j);
+                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
+                                }
+                                k = 0;
+                            }
+                            else if (matrizTemp[i].charAt(k) == '0') {
+                                for (int l = k - 1; l >= 0; l--) {
+                                    if (matrizTemp[i].charAt(l) != '0') {
+                                        String coefIncognita = matrizTemp[i].substring(l, k+1);
+                                        matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
+                                    }
+                                }
+                                k = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return matriz1;
+    }
     /**
      * precisa da matriz*
      */
