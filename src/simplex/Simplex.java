@@ -338,10 +338,10 @@ public class Simplex {
      * @param variaveisBase
      * @param pivot
      */
-    public static void atualizarVariaveisBase(String[][] cabecalho, String[] variaveisBase, double[] pivot) {
+    public static void atualizarVariaveisBase(String[] cabecalho, String[] variaveisBase, double[] pivot) {
         int coluna = (int) pivot[2];
         int linha = (int) pivot[1];
-        variaveisBase[linha] = cabecalho[0][coluna];
+        variaveisBase[linha] = cabecalho[coluna];
     }
 
     public static void solucaoBasica(int numeroLinhas, String[] variaveisBase, int numColunas) throws FileNotFoundException {
