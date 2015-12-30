@@ -160,7 +160,7 @@ public class Simplex {
      * @param colunaPivot
      * @return
      */
-    public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, String[] variaveisBase, String[][] cabecalho) {
+    public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, String[] variaveisBase, String[] cabecalho) {
         double pivot[] = new double[3];
         pivot[2] = colunaPivot;
         for (int i = 0; i < numeroLinhas - 1; i++) {
@@ -267,7 +267,7 @@ public class Simplex {
         escrever.format("%n");
     }
 
-    public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) {
+    public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException{
 
         int j = 0;
         double cont = 0;
