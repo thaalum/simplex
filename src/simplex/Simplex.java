@@ -23,7 +23,7 @@ public class Simplex {
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         String matrizTemp[] = retornaMatrizTemp(nomeFicheiroEntrada, numLinhasFicheiro);
         matriz = preencheMatriz(matrizTemp, numLinhasFicheiro);
-
+        verificaLinhaZ(matriz,numColunasMatriz,numLinhasMatriz,cabecalho,variaveisBase);
     }
 
     /**
@@ -44,6 +44,13 @@ public class Simplex {
         return numeroLinhas;
     }
 
+    /**
+     *
+     * @param ficheiro
+     * @param numLinhas
+     * @return
+     * @throws FileNotFoundException
+     */
     public static String[] retornaMatrizTemp(String ficheiro, int numLinhas) throws FileNotFoundException {
         String[] matrizTemp = new String[numLinhas];
         Scanner ler = new Scanner(new File(ficheiro));
@@ -53,6 +60,7 @@ public class Simplex {
             if (!aux.isEmpty()) {
                 matrizTemp[i] = aux.replaceAll("\\s", "");
                 matrizTemp[i] = matrizTemp[i].replaceAll("[<|≤]", "=");
+                matrizTemp[i] = matrizTemp[i].replaceAll("[>|≥]", "=");
                 i++;
             }
         }
@@ -61,23 +69,17 @@ public class Simplex {
 
     public static double[][] preencheMatriz(String[] matrizTemp, int numLinhas) throws FileNotFoundException {
         double matriz1[][] = new double[numLinhas][numLinhas + 2];
-        matriz1[0][2] = 0.0;
-        matriz1[0][3] = 0.0;
-        matriz1[0][4] = 0.0;
-        matriz1[0][5] = 0.0;
-        matriz1[1][3] = matriz1[1][4] = 0.0;
-        matriz1[2][2] = matriz1[2][4] = 0.0;
-        matriz1[3][2] = matriz1[3][3] = 0.0;
-        matriz1[1][2] = matriz1[2][3] = matriz1[3][4] = 1.0;
-        for (int i = 0; i < numLinhas; i++) {
-            if (i != 0) {
-                for (int l = 0; l < matrizTemp[i].length(); l++) {
-                    if (matrizTemp[i].charAt(l) == '=') {
-                        String valorB = matrizTemp[i].substring(l + 1, matrizTemp[i].length());
-                        matriz1[i][numLinhas + 1] = Double.parseDouble(valorB);
-                    }
-                }
+        for (int m = 0; m < numLinhasMatriz; m++) {
+            for (int o = 0; o < numColunasMatriz; o++) {
+                matriz1[m][o] = 0.0;
             }
+        }
+        int contador = 2;
+        for (int n = 1; n < numLinhas; n++) {
+            matriz1[n][contador] = 1.0;
+            contador++;
+        }
+        for (int i = 0; i < numLinhas; i++) {
             for (int j = 0; j < matrizTemp[i].length(); j++) {
                 if (matrizTemp[i].charAt(j) == 'x' | matrizTemp[i].charAt(j) == 'X') {
                     int numIncognita = Character.getNumericValue(matrizTemp[i].charAt(j + 1));
@@ -87,45 +89,63 @@ public class Simplex {
                         } else {
                             matriz1[i][numIncognita - 1] = 1.0;
                         }
-                    } else if (matrizTemp[i].charAt(j - 1) == '0' & j == 1) {
+                    } else if (matrizTemp[i].charAt(j - 1) == '0' && j == 1) {
                         matriz1[i][numIncognita - 1] = 0.0;
-                    } else if ((matrizTemp[i].charAt(j - 1) == '0') & (matrizTemp[i].charAt(j - 2) == '+' | matrizTemp[i].charAt(j - 2) == '=')) {
-                        matriz1[i][numIncognita - 1] = 0.0;
-                    } else if (matrizTemp[i].charAt(j - 1) == '+' | matrizTemp[i].charAt(j - 1) == '=') {
-                        if (i == 0) {
-                            matriz1[i][numIncognita - 1] = -1.0;
+                    } else if (j >= 1) {
+                        if ((matrizTemp[i].charAt(j - 1) == '0') && (matrizTemp[i].charAt(j - 2) == '+' | matrizTemp[i].charAt(j - 2) == '=')) {
+                            matriz1[i][numIncognita - 1] = 0.0;
+                        } else if (matrizTemp[i].charAt(j - 1) == '+' | matrizTemp[i].charAt(j - 1) == '=') {
+                            if (i == 0) {
+                                matriz1[i][numIncognita - 1] = -1.0;
+                            } else {
+                                matriz1[i][numIncognita - 1] = 1.0;
+                            }
                         } else {
-                            matriz1[i][numIncognita - 1] = 1.0;
-                        }
-                    } else {
-                        for (int k = j - 1; k >= 0; k--) {
-                            if (k == 0) {
-                                if (i == 0) {
-                                    String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
-                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
-                                } else {
-                                    String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
-                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
-                                }
-                                k = 0;
-                            } else if (matrizTemp[i].charAt(k) == '+' | matrizTemp[i].charAt(k) == '=') {
-                                if (i == 0) {
-                                    String coefIncognita = matrizTemp[i].substring(k + 1, j);
-                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
-                                } else {
-                                    String coefIncognita = matrizTemp[i].substring(k + 1, j);
-                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
-                                }
-                                k = 0;
-                            } else if (matrizTemp[i].charAt(k) == '0') {
-                                for (int l = k - 1; l >= 0; l--) {
-                                    if (matrizTemp[i].charAt(l) != '0') {
-                                        String coefIncognita = matrizTemp[i].substring(l, k + 1);
+                            for (int k = j - 1; k >= 0; k--) {
+                                if (k == 0) {
+                                    if (i == 0) {
+                                        String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
+                                        matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
+                                    } else if (matrizTemp[i].charAt(k) == '-'){
+                                        String coefIncognita = matrizTemp[i].substring(k+1, j);
+                                        matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita)*(-1);
+                                    } else {
+                                        String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
                                         matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
                                     }
+                                } else if (matrizTemp[i].charAt(k) == '+' | matrizTemp[i].charAt(k) == '=') {
+                                    if (i == 0) {
+                                        String coefIncognita = matrizTemp[i].substring(k + 1, j);
+                                        matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
+                                    } else {
+                                        String coefIncognita = matrizTemp[i].substring(k + 1, j);
+                                        matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
+                                    }
+                                    k = 0;
+                                } else if (matrizTemp[i].charAt(k) == '0') {
+                                    for (int l = k - 1; l >= 0; l--) {
+                                        if (matrizTemp[i].charAt(l) != '0') {
+                                            if (l > 0) {
+                                                if (matrizTemp[i].charAt(l - 1) == '-') {
+                                                    String coefIncognita = matrizTemp[i].substring(l, k + 1);
+                                                    matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
+                                                }
+                                            }
+                                            String coefIncognita = matrizTemp[i].substring(l, k + 1);
+                                            matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
+                                        }
+                                    }
+                                    k = 0;
                                 }
-                                k = 0;
                             }
+                        }
+                    }
+                }
+                if (i != 0) {
+                    for (int l = 0; l < matrizTemp[i].length(); l++) {
+                        if (matrizTemp[i].charAt(l) == '=') {
+                            String valorB = matrizTemp[i].substring(l + 1, matrizTemp[i].length());
+                            matriz1[i][numLinhas + 1] = Double.parseDouble(valorB);
                         }
                     }
                 }
@@ -135,7 +155,10 @@ public class Simplex {
     }
 
     /**
-     * precisa da matriz*
+     * precisa da matriz
+     *
+     *
+     * @param numLinhas
      */
     public static int variavelEntrada(int numLinhas, double matriz[][]) {
         double valorMenor = 0;
@@ -158,6 +181,7 @@ public class Simplex {
      * @param numeroLinhas
      * @param matriz
      * @param colunaPivot
+     * @param cabecalho
      * @return
      */
     public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, String[] variaveisBase, String[] cabecalho) {
@@ -214,13 +238,9 @@ public class Simplex {
             if (i == linha) {
                 i = i + 1;
             }
-
             for (j = 0; j < numeroColunasMatriz + 2; j++) {
-
                 matriz[i][j] = (matriz[i][coluna] * (-1) * matriz[linha][j] + matriz[i][j]);
-
             }
-
         }
     }
 
@@ -228,9 +248,9 @@ public class Simplex {
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever = new Formatter(ficheiro);
         cabecalho(cabecalho);
-        for (int i = 0; i < matriz.length; i++) {
+        for (int i = 0; i < matriz[0].length; i++) {
             escrever.format("\n");
-            for (int j = 0; j < matriz[0].length + 2; j++) {
+            for (int j = 0; j < matriz[i].length + 2; j++) {
                 escrever.format("%3.2f", matriz[i][j]);
             }
             if (i == matriz.length) {
@@ -238,10 +258,9 @@ public class Simplex {
             }
         }
         escrever.close();
-
     }
 
-    public static void imprimematrizconsola(double[][] matriz, int numeroLinhasFicheiro, int numeroColunasFicheiro, String[] variaveisBase) {
+    public static void imprimeMatrizConsola(double[][] matriz, int numeroLinhasFicheiro, int numeroColunasFicheiro, String[] variaveisBase) {
         int i = 0, j = 0;
         for (i = 0; i < numeroLinhasFicheiro; i++) {
             for (j = 0; j < numeroColunasFicheiro; j++) {
@@ -261,19 +280,19 @@ public class Simplex {
     public static void cabecalho(String[] cabecalho) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever = new Formatter(ficheiro);
-        for (int i = 0; i < cabecalho[0].length(); i++) {
+        for (int i = 0; i < cabecalho.length; i++) {
             escrever.format("%5s", cabecalho[i]);
         }
         escrever.format("%n");
     }
 
-    public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException{
+    public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException {
 
         int j = 0;
         double cont = 0;
-        for (j = 0; j < numColunasMatriz; j++) {
-            if (matriz[numLinhasMatriz][j] < cont) {
-                cont = matriz[numLinhasMatriz][j];
+        for (j = 0; j < numColunasMatriz-1; j++) {
+            if (matriz[numLinhasMatriz-1][j] < cont) {
+                cont = matriz[numLinhasMatriz-1][j];
             }
         }
 
@@ -287,7 +306,7 @@ public class Simplex {
             dividirLinhaPivot(pivot, numLinhasMatriz, matriz);
             anulaLinhas(pivot, matriz, numLinhasMatriz, numColunasMatriz);
             escreveFicheiroTexto(matriz, cabecalho);
-            imprimematrizconsola(matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
+            imprimeMatrizConsola(matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
 
             for (j = 0; j < numColunasMatriz; j++) {
                 if (matriz[numLinhasMatriz][j] < cont) {
@@ -295,6 +314,7 @@ public class Simplex {
                 }
             }
         }
+        solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz);
     }
 
     /**
@@ -344,37 +364,41 @@ public class Simplex {
         variaveisBase[linha] = cabecalho[coluna];
     }
 
+    /**
+     *
+     * @param numeroLinhas
+     * @param variaveisBase
+     * @param numColunas
+     * @throws FileNotFoundException
+     */
     public static void solucaoBasica(int numeroLinhas, String[] variaveisBase, int numColunas) throws FileNotFoundException {
         // Escrever solução como (x1,x2,s1,s2.)=(_,_,_,_)
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever = new Formatter(ficheiro);
         escrever.format("%s%5s", "(", "X1,X2");
         for (int i = 1; i < numeroLinhas; i++) {
-            String folga = "S" + i;
+            String numFolga = String.valueOf(i);
+            String folga = ",S";
+            folga = folga.concat(numFolga);
             escrever.format("%2s", folga);
         }
         escrever.format("%4s", ") = ");
-
         double[] solucao = new double[numeroLinhas];
         int nEl = 0;
         int j = 0;
-        while (!variaveisBase[j].equals("X1")
-                && j < variaveisBase.length) {
+        while (!variaveisBase[j].equals("X1") && j < variaveisBase.length) {
             j++;
         }
-
         if (j < variaveisBase.length) {
             solucao[nEl] = matriz[j][numColunas - 1];
             nEl++;
         } else {
             solucao[nEl] = 0;
             nEl++;
-
             while (!variaveisBase[j].equals("X2")
                     && j < variaveisBase.length) {
                 j++;
             }
-
             if (j < variaveisBase.length) {
                 solucao[nEl] = matriz[j][numColunas - 1];
                 nEl++;
@@ -395,11 +419,10 @@ public class Simplex {
                         solucao[nEl] = 0;
                         nEl++;
                     }
-                    escrever.format("%n");
+                    escrever.format("%s", solucao);
                 }
-
             }
         }
+        escrever.flush();
     }
-
 }
