@@ -159,6 +159,7 @@ public class Simplex {
             }
         }
         return matriz1;
+        
     }
 
     /**
@@ -194,9 +195,9 @@ public class Simplex {
     public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, String[] variaveisBase, String[] cabecalho) {
         double pivot[] = new double[3];
         pivot[2] = colunaPivot;
-        for (int i = 0; i < numeroLinhas - 1; i++) {
+        for (int i = 0; i < numeroLinhas - 2; i++) {
             double temp = ((matriz[i][numeroLinhas + 1]) / (matriz[i][colunaPivot]));
-            for (int j = i + 1; j < numeroLinhas; j++) {
+            for (int j = i + 1; j < numeroLinhas - 1; j++) {
                 double aux = ((matriz[j][numeroLinhas + 1]) / (matriz[j][colunaPivot]));
 
                 if (temp > 0 && aux > 0) {
@@ -253,13 +254,13 @@ public class Simplex {
         }
     }
 
-    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho) throws FileNotFoundException {
+    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever;
         escrever = new Formatter(ficheiro);
         cabecalho(cabecalho);
 
-        for (int i = 0; i < matriz.length; i++) {
+        for (int i = 0; i < numLinhasMatriz; i++) {
             escrever.format("\n");
             for (int j = 0; j < matriz[i].length; j++) {
                 escrever.format("%3.2f", matriz[i][j]);
@@ -303,9 +304,10 @@ public class Simplex {
 
         int j = 0;
         double cont = 0;
-        for (j = 0; j < numColunasMatriz-1; j++) {
-            if (matriz[numLinhasMatriz-1][j] < cont) {
-                cont = matriz[numLinhasMatriz-1][j];
+        
+        for (j = 0; j < numColunasMatriz -1; j++) {
+            if (matriz[numLinhasMatriz - 1][j] < cont) {
+                cont = matriz[numLinhasMatriz -1 ][j];
             }
         }
 
@@ -318,15 +320,15 @@ public class Simplex {
             double[] pivot = procurarVariavelSaida(numLinhasMatriz, matriz, colunaPivot, variaveisBase, cabecalho);
             dividirLinhaPivot(pivot, numLinhasMatriz, matriz);
             anulaLinhas(pivot, matriz, numLinhasMatriz, numColunasMatriz);
-            escreveFicheiroTexto(matriz, cabecalho);
+            escreveFicheiroTexto(matriz, cabecalho, numLinhasMatriz);
             imprimeMatrizConsola(matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
 
-            for (j = 0; j < numColunasMatriz; j++) {
-                if (matriz[numLinhasMatriz-1][j] < cont) {
-                    cont = matriz[numLinhasMatriz][j];
+            for (j = 0; j < numColunasMatriz -1; j++) {
+                if (matriz[numLinhasMatriz - 1][j] < cont) {
+                    cont = matriz[numLinhasMatriz - 1][j];
                 }
-            }
-        }
+            } 
+        } 
         
         solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz);
     }
