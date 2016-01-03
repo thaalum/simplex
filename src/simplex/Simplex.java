@@ -238,19 +238,20 @@ public class Simplex {
             if (i == linha) {
                 i = i + 1;
             }
-            for (j = 0; j < numeroColunasMatriz + 2; j++) {
+            for (j = 0; j < numeroColunasMatriz; j++) {
                 matriz[i][j] = (matriz[i][coluna] * (-1) * matriz[linha][j] + matriz[i][j]);
             }
         }
     }
 
-    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho) throws FileNotFoundException {
+    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numColunasMatriz, int numLinhasMatriz) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
-        Formatter escrever = new Formatter(ficheiro);
+        Formatter escrever;
+        escrever = new Formatter(ficheiro);
         cabecalho(cabecalho);
-        for (int i = 0; i < matriz[0].length; i++) {
+        for (int i = 0; i < matriz.length; i++) {
             escrever.format("\n");
-            for (int j = 0; j < matriz[i].length + 2; j++) {
+            for (int j = 0; j < matriz[i].length; j++) {
                 escrever.format("%3.2f", matriz[i][j]);
             }
             if (i == matriz.length) {
@@ -305,7 +306,7 @@ public class Simplex {
             double[] pivot = procurarVariavelSaida(numLinhasMatriz, matriz, colunaPivot, variaveisBase, cabecalho);
             dividirLinhaPivot(pivot, numLinhasMatriz, matriz);
             anulaLinhas(pivot, matriz, numLinhasMatriz, numColunasMatriz);
-            escreveFicheiroTexto(matriz, cabecalho);
+            escreveFicheiroTexto(matriz, cabecalho,numColunasMatriz);
             imprimeMatrizConsola(matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
 
             for (j = 0; j < numColunasMatriz; j++) {
