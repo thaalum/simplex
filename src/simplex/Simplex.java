@@ -23,6 +23,13 @@ public class Simplex {
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         String matrizTemp[] = retornaMatrizTemp(nomeFicheiroEntrada, numLinhasFicheiro);
         matriz = preencheMatriz(matrizTemp, numLinhasFicheiro);
+        
+        //for (int k = 0 ; k < numLinhasMatriz;k++){
+        //    for (int j=0;j<numColunasMatriz;j++){
+        //        System.out.print(matriz[k][j]+" ");
+        //    }
+        //    System.out.println("");
+        //}
         verificaLinhaZ(matriz,numColunasMatriz,numLinhasMatriz,cabecalho,variaveisBase);
     }
 
@@ -238,7 +245,9 @@ public class Simplex {
             if (i == linha) {
                 i = i + 1;
             }
+
             for (j = 0; j < numeroColunasMatriz; j++) {
+
                 matriz[i][j] = (matriz[i][coluna] * (-1) * matriz[linha][j] + matriz[i][j]);
             }
         }
@@ -249,10 +258,17 @@ public class Simplex {
         Formatter escrever;
         escrever = new Formatter(ficheiro);
         cabecalho(cabecalho);
+<<<<<<< HEAD
         for (int i = 0; i < matriz.length; i++) {
             escrever.format("\n");
             for (int j = 0; j < matriz[i].length; j++) {
                 escrever.format("%3.2f", matriz[i][j]);
+=======
+        for (int i = 0; i < numLinhasMatriz; i++) {
+            escrever.format("\n");
+            for (int j = 0; j < numColunasMatriz ; j++) {
+                escrever.format("%3.2f%s", matriz[i][j]," ");
+>>>>>>> origin/master
             }
             if (i == matriz.length) {
                 escrever.format("\n");
@@ -285,6 +301,7 @@ public class Simplex {
             escrever.format("%5s", cabecalho[i]);
         }
         escrever.format("%n");
+        escrever.close();
     }
 
     public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException {
@@ -310,11 +327,12 @@ public class Simplex {
             imprimeMatrizConsola(matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
 
             for (j = 0; j < numColunasMatriz; j++) {
-                if (matriz[numLinhasMatriz][j] < cont) {
+                if (matriz[numLinhasMatriz-1][j] < cont) {
                     cont = matriz[numLinhasMatriz][j];
                 }
             }
         }
+        
         solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz);
     }
 
@@ -424,6 +442,6 @@ public class Simplex {
                 }
             }
         }
-        escrever.flush();
+        escrever.close();
     }
 }
