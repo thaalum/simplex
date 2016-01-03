@@ -291,6 +291,7 @@ public class Simplex {
             escrever.format("%5s", cabecalho[i]);
         }
         escrever.format("%n");
+        escrever.close();
     }
 
     public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException {
@@ -321,6 +322,7 @@ public class Simplex {
                 }
             }
         }
+        
         solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz);
     }
 
@@ -430,6 +432,6 @@ public class Simplex {
                 }
             }
         }
-        escrever.flush();
+        escrever.close();
     }
 }
