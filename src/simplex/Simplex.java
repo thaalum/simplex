@@ -31,6 +31,7 @@ public class Simplex {
         //    System.out.println("");
         //}
         verificaLinhaZ(matriz,numColunasMatriz,numLinhasMatriz,cabecalho,variaveisBase);
+        
     }
 
     /**
@@ -192,7 +193,7 @@ public class Simplex {
      * @param cabecalho
      * @return
      */
-    public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, String[] variaveisBase, String[] cabecalho) {
+    public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot) {
         double pivot[] = new double[3];
         pivot[2] = colunaPivot;
         for (int i = 0; i < numeroLinhas - 2; i++) {
@@ -219,8 +220,7 @@ public class Simplex {
                     }
                 }
             }
-        }
-        atualizarVariaveisBase(cabecalho, variaveisBase, pivot);
+        }       
         return pivot;
     }
 
@@ -317,7 +317,8 @@ public class Simplex {
              verificar ordem de entrada dos metodos
              */
             int colunaPivot = variavelEntrada(numLinhasMatriz, matriz);
-            double[] pivot = procurarVariavelSaida(numLinhasMatriz, matriz, colunaPivot, variaveisBase, cabecalho);
+            double[] pivot = procurarVariavelSaida(numLinhasMatriz, matriz, colunaPivot);
+            atualizarVariaveisBase(cabecalho, variaveisBase, pivot);
             dividirLinhaPivot(pivot, numLinhasMatriz, matriz);
             anulaLinhas(pivot, matriz, numLinhasMatriz, numColunasMatriz);
             escreveFicheiroTexto(matriz, cabecalho, numLinhasMatriz);
