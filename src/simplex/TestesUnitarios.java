@@ -68,12 +68,30 @@ public class TestesUnitarios {
         else {System.out.println("0-testeDividirLinhaPivot retorna valor incorreto");
     }
     }
-            
+    public static void testeVariavelEntrada(){
+     double[][] matriz = {
+        {2,-5,2,-5,-45},
+        {0,2,0,2,-6},
+        {1,0,0,0,0},
+        {0,1,0,0,0},
+        {0,0,1,0,0},
+        {0,0,0,1,0},
+        {5,4,5,4,0},
+        };
+     int numeroLinhas=5;
+     int colunaPivot=Simplex.variavelEntrada(numeroLinhas, matriz);
+     if(colunaPivot==0){
+            System.out.println("1-testeVariavelEntrada retorna valor correto");
+        }
+        else {System.out.println("0-testeDVariavelEntrada retorna valor incorreto");
+    }
+    }        
     
     public static void executarTestes() throws FileNotFoundException {
         testeRetornaNumLinhasFicheiro();
         testeProcurarVariavelSaida();
         testeDividirLinhaPivot();
+        testeVariavelEntrada();
     }
     
 }
