@@ -27,7 +27,6 @@ public class TestesUnitarios {
         {
             System.out.println("0 - testeReturaNumLinhasFicheiro2");
         }
-        
     }
     public static void testeProcurarVariavelSaida() {
         int numeroLinhas=5, colunaPivot=0; 

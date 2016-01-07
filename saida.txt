@@ -1,0 +1,4 @@
+<<<<<<< Updated upstream
+=======
+(X1,X2,S1,S2,S3) = 
+>>>>>>> Stashed changes

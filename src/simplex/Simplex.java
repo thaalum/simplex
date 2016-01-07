@@ -23,15 +23,23 @@ public class Simplex {
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         String matrizTemp[] = retornaMatrizTemp(nomeFicheiroEntrada, numLinhasFicheiro);
         matriz = preencheMatriz(matrizTemp, numLinhasFicheiro);
+<<<<<<< Updated upstream
         
+=======
+
+>>>>>>> Stashed changes
         //for (int k = 0 ; k < numLinhasMatriz;k++){
         //    for (int j=0;j<numColunasMatriz;j++){
         //        System.out.print(matriz[k][j]+" ");
         //    }
         //    System.out.println("");
         //}
+<<<<<<< Updated upstream
         verificaLinhaZ(matriz,numColunasMatriz,numLinhasMatriz,cabecalho,variaveisBase);
         
+=======
+        verificaLinhaZ(matriz, numColunasMatriz, numLinhasMatriz, cabecalho, variaveisBase);
+>>>>>>> Stashed changes
     }
 
     /**
@@ -72,6 +80,10 @@ public class Simplex {
                 i++;
             }
         }
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         return matrizTemp;
     }
 
@@ -83,7 +95,11 @@ public class Simplex {
             }
         }
         int contador = 2;
+<<<<<<< Updated upstream
         for (int n = 1; n < numLinhas; n++) {
+=======
+        for (int n = 0; n < numLinhas - 1; n++) {
+>>>>>>> Stashed changes
             matriz1[n][contador] = 1.0;
             contador++;
         }
@@ -114,9 +130,21 @@ public class Simplex {
                                     if (i == 0) {
                                         String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
                                         matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
+<<<<<<< Updated upstream
                                     } else if (matrizTemp[i].charAt(k) == '-'){
                                         String coefIncognita = matrizTemp[i].substring(k+1, j);
                                         matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita)*(-1);
+=======
+                                    } else if (matrizTemp[i].charAt(k) == '-') {
+                                        if (matrizTemp[i].charAt(k + 1) == 'x' | matrizTemp[i].charAt(k + 1) == 'x') {
+                                            String coefIncognita = "-1";
+                                            matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
+                                        } else {
+                                            String coefIncognita = matrizTemp[i].substring(k + 1, j);
+                                            matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita) * (-1);
+                                        }
+
+>>>>>>> Stashed changes
                                     } else {
                                         String coefIncognita = Character.toString(matrizTemp[i].charAt(k));
                                         matriz1[i][numIncognita - 1] = Double.parseDouble(coefIncognita);
@@ -159,8 +187,25 @@ public class Simplex {
                 }
             }
         }
+<<<<<<< Updated upstream
         return matriz1;
         
+=======
+//        double teste[][] = matriz1;
+//
+//        for (int i = 0; i < numLinhasMatriz - 1; i++) {
+//            matriz1[i] = teste[i + 1];
+//        }
+//        matriz1[0] = teste[numLinhasMatriz - 1];
+        for (int i = 0; i < numLinhasMatriz; i++) {
+            for (int j = 0; j < numColunasMatriz; j++) {
+                System.out.print(matriz1[i][j] + " ");
+            }
+            System.out.println("");
+        }
+        return matriz1;
+
+>>>>>>> Stashed changes
     }
 
     /**
@@ -180,7 +225,6 @@ public class Simplex {
             }
         }
         return colunaPivot;
-
     }
 
     /**
@@ -193,7 +237,11 @@ public class Simplex {
      * @param cabecalho
      * @return
      */
+<<<<<<< Updated upstream
     public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot) {
+=======
+    public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, String[] variaveisBase, String[] cabecalho) {
+>>>>>>> Stashed changes
         double pivot[] = new double[3];
         pivot[2] = colunaPivot;
         for (int i = 0; i < numeroLinhas - 2; i++) {
@@ -245,12 +293,20 @@ public class Simplex {
         for (i = 0; i < numeroLinhasMatriz; i++) {
             if (i == linha) {
                 i = i + 1;
+<<<<<<< Updated upstream
             }
 
             for (j = 0; j < numeroColunasMatriz; j++) {
 
                 matriz[i][j] = (matriz[i][coluna] * (-1) * matriz[linha][j] + matriz[i][j]);
             }
+=======
+            }
+            for (j = 0; j < numeroColunasMatriz; j++) {
+
+                matriz[i][j] = (matriz[i][coluna] * (-1) * matriz[linha][j] + matriz[i][j]);
+            }
+>>>>>>> Stashed changes
         }
     }
 
@@ -277,7 +333,11 @@ public class Simplex {
         int i = 0, j = 0;
         for (i = 0; i < numeroLinhasFicheiro; i++) {
             for (j = 0; j < numeroColunasFicheiro; j++) {
+<<<<<<< Updated upstream
                 System.out.printf("%3.2f", matriz[i][j]);
+=======
+                System.out.printf("%3.2f%s", matriz[i][j], " ");
+>>>>>>> Stashed changes
             }
             System.out.println();
         }
@@ -303,6 +363,7 @@ public class Simplex {
     public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException {
 
         int j = 0;
+<<<<<<< Updated upstream
         double cont = 0;
         
         for (j = 0; j < numColunasMatriz -1; j++) {
@@ -310,20 +371,36 @@ public class Simplex {
                 cont = matriz[numLinhasMatriz -1 ][j];
             }
         }
+=======
+        //double cont = 0;
+>>>>>>> Stashed changes
 
-        while (cont < 0) {
+        //for (j = 0; j < numColunasMatriz -1; j++) {
+        //    if (matriz[numLinhasMatriz - 1][j] < cont) {
+        //        cont = matriz[numLinhasMatriz -1 ][j];
+        //    }
+        //}
+        boolean temNegativos = false;
+        do {
             /*
              chamar metodos
              verificar ordem de entrada dos metodos
              */
+<<<<<<< Updated upstream
             int colunaPivot = variavelEntrada(numLinhasMatriz, matriz);
             double[] pivot = procurarVariavelSaida(numLinhasMatriz, matriz, colunaPivot);
             atualizarVariaveisBase(cabecalho, variaveisBase, pivot);
+=======
+            temNegativos = false;
+            int colunaPivot = variavelEntrada(numLinhasMatriz, matriz);
+            double[] pivot = procurarVariavelSaida(numLinhasMatriz, matriz, colunaPivot, variaveisBase, cabecalho);
+>>>>>>> Stashed changes
             dividirLinhaPivot(pivot, numLinhasMatriz, matriz);
             anulaLinhas(pivot, matriz, numLinhasMatriz, numColunasMatriz);
             escreveFicheiroTexto(matriz, cabecalho, numLinhasMatriz);
             imprimeMatrizConsola(matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
 
+<<<<<<< Updated upstream
             for (j = 0; j < numColunasMatriz -1; j++) {
                 if (matriz[numLinhasMatriz - 1][j] < cont) {
                     cont = matriz[numLinhasMatriz - 1][j];
@@ -331,6 +408,15 @@ public class Simplex {
             } 
         } 
         
+=======
+            for (j = 0; j < numColunasMatriz - 1; j++) {
+                if (matriz[numLinhasMatriz - 1][j] < 0) {
+                    temNegativos = true;
+                }
+            }
+        } while (temNegativos);
+
+>>>>>>> Stashed changes
         solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz);
     }
 
