@@ -1,4 +1,1 @@
-<<<<<<< Updated upstream
-=======
-(X1,X2,S1,S2,S3) = 
->>>>>>> Stashed changes
+   X1   X2   S2   S3   S4   S5   S6    b

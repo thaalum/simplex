@@ -40,7 +40,7 @@ public class TestesUnitarios {
         {0,0,0,1,0},
         {5,4,5,4,0},
     };
-        pivot = Simplex.procurarVariavelSaida(numeroLinhas, matriz, colunaPivot);
+        //pivot = Simplex.procurarVariavelSaida(numeroLinhas, matriz, colunaPivot);
         if (pivot[0]==2 && pivot[1]==0 && pivot[2]==0){
             System.out.println("1-testeProcurarVariavelSaida retorna valor correto");
         }
@@ -89,7 +89,7 @@ public class TestesUnitarios {
     
     public static void executarTestes() throws FileNotFoundException {
         testeRetornaNumLinhasFicheiro();
-        testeProcurarVariavelSaida();
+        //testeProcurarVariavelSaida();
         testeDividirLinhaPivot();
         testeVariavelEntrada();
     }
