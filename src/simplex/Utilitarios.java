@@ -24,7 +24,6 @@ public class Utilitarios {
                 linhaZ = i;
             }
         }
-        System.out.println(linhaZ);
         return linhaZ;
     }
 
