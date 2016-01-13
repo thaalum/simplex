@@ -93,27 +93,55 @@ public class TestesUnitarios {
             {7.00, 0.00, -5.00, 0.00, 1.00, 35.00},
             {-10.00, 0.00, 6.00, 0.00, 0.00, 66.00},};
         Simplex.anulaLinhas(pivot, matriz, numLinhas, numColunas);
-        for (int i = 0; i < numLinhas; i++){
-            for (int j = 0; j < numColunas; j++){
-                if (matriz[i][j] != matrizsaida[i][j]){
+        for (int i = 0; i < numLinhas; i++) {
+            for (int j = 0; j < numColunas; j++) {
+                if (matriz[i][j] != matrizsaida[i][j]) {
                     System.out.println("0 - testeanulaLinhas" + i + j);
-                } 
-                    
                 }
+
             }
-        System.out.println("1 - testeanulaLinhas");
         }
-        
-      
-    
+        System.out.println("1 - testeanulaLinhas");
+    }
+
+    public static void testetransposta() {
+        double matriz[][] = {
+            {-1, 1, 1, 0, 0, 11},
+            {1, 1, 0, 1, 0, 27},
+            {2, 5, 0, 0, 1, 90},
+            {-4, -6, 0, 0, 0, 0},};
+        double transposta[][] = {
+            {-1, 1, 2, -4},
+            {1, 1, 5, -6},
+            {1, 0, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {11, 27, 90, 0},};
+        double [][] trans = new double [matriz[0].length][matriz.length];
+        trans = minimizacao.transposta(matriz);
+        for (int i = 0;
+                i < trans.length;
+                i++) {
+            for (int j = 0; j < trans[0].length; j++) {
+                if (transposta[i][j] != trans[i][j]) {
+                    System.out.println("0 - testetransposta" + i + j);
+                }
+
+            }
+        }
+
+        System.out.println(
+                "1 - testetransposta");
+    }
 
     public static void executarTestes() throws FileNotFoundException {
         testeRetornaNumLinhasFicheiro();
         testeanulaLinhas();
+        testetransposta();
         //testeProcurarVariavelSaida();
         testeDividirLinhaPivot();
         testeVariavelEntrada();
-        
+
     }
 
 }

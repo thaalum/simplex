@@ -12,6 +12,7 @@ package simplex;
 public class minimizacao {
 
     public static void main(String[] args) {
+        TestesUnitarios.testetransposta();
 
     }
 
