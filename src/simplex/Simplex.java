@@ -22,7 +22,7 @@ public class Simplex {
         nomeFicheiroSaida = args[1];
         numLinhasMatriz = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
         String matrizTemp[] = retornaMatrizTemp(nomeFicheiroEntrada, numLinhasMatriz);
-        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]+1);
+        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)] + 1);
         String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
@@ -228,13 +228,17 @@ public class Simplex {
             }
 
             for (j = 0; j < numeroColunasMatriz; j++) {
+                if (j == coluna) {
+                    j = j + 1;
+                }
 
-                matriz[i][j] = matriz[i][j] - (-matriz[i][coluna]) * matriz[linha][j];
+                matriz[i][j] = matriz[linha][j] * (-matriz[i][coluna]) + matriz[i][j];
             }
+            matriz[i][coluna] = 0;
         }
     }
 
-    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
+public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever;
         escrever = new Formatter(ficheiro);
