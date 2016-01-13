@@ -26,6 +26,7 @@ public class Simplex {
         String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
+        TestesUnitarios.executarTestes();
         verificaLinhaZ(matriz, numColunasMatriz, numLinhasMatriz, cabecalho, variaveisBase);
 
     }
