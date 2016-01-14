@@ -27,7 +27,10 @@ public class Simplex {
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
         TestesUnitarios.executarTestes();
+        // se for maxi continua se for mini salta pra classe minimizaçao main
+        maximizacao();
         verificaLinhaZ(matriz, numColunasMatriz, numLinhasMatriz, cabecalho, variaveisBase);
+        
 
     }
 
@@ -82,7 +85,13 @@ public class Simplex {
         }
         return matrizTemp;
     }
-
+    /**
+     * 
+     * @param matrizTemp
+     * @param numLinhas
+     * @return
+     * @throws FileNotFoundException 
+     */
     public static double[][] preencheMatriz(String[] matrizTemp, int numLinhas) throws FileNotFoundException {
 
         int numVariaveis = Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhas)]);
@@ -158,16 +167,16 @@ public class Simplex {
     }
 
     /**
-     * precisa da matriz
-     *
-     *
+     * 
      * @param numLinhas
+     * @param numColunas
+     * @param matriz
+     * @return 
      */
-    public static int variavelEntrada(int numLinhas, double matriz[][]) {
-        double valorMenor = 0;
+    public static int variavelEntrada(int numLinhas, int numColunas, double matriz[][]) {
+        double valorMenor = 0.0;
         int colunaPivot = 0;
-        int j;
-        for (j = 0; j < numLinhas + 2; j++) {
+        for (int j = 0; j < numColunas; j++) {
             if (matriz[numLinhas - 1][j] < valorMenor) {
                 valorMenor = matriz[numLinhas - 1][j];
                 colunaPivot = j;
@@ -177,15 +186,14 @@ public class Simplex {
 
     }
 
-    /**
+     /**
      * cria vector pivot constituido pelo valor do pivot em 0, linha de pivot em
      * 1 e coluna do pivot em 2
-     *
      * @param numeroLinhas
      * @param matriz
      * @param colunaPivot
-     * @param cabecalho
-     * @return
+     * @param numeroColunas
+     * @return 
      */
     public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, int numeroColunas) {
         double pivot[] = new double[3];
@@ -216,19 +224,25 @@ public class Simplex {
     }
 
     /**
-     * Divide a Linha do pivot pelo seu valor
-     *
-     * @param pivot
-     * @param numeroLinhas
-     * @param matriz
-     */
-    public static void dividirLinhaPivot(double[] pivot, int numeroLinhas, double[][] matriz) {
+    * Divide a Linha do pivot pelo seu valor
+    * @param pivot
+    * @param numeroColunas
+    * @param matriz 
+    */
+     
+    public static void dividirLinhaPivot(double[] pivot, int numeroColunas, double[][] matriz) {
         int linhaPivot = (int) pivot[1];
-        for (int i = 0; i < numeroLinhas + 2; i++) {
+        for (int i = 0; i < numeroColunas + 2; i++) {
             matriz[linhaPivot][i] = (matriz[linhaPivot][i] / pivot[0]);
         }
     }
-
+    /**
+     * 
+     * @param pivot
+     * @param matriz
+     * @param numeroLinhasMatriz
+     * @param numeroColunasMatriz 
+     */
     public static void anulaLinhas(double[] pivot, double[][] matriz, int numeroLinhasMatriz, int numeroColunasMatriz) {
         int linha = (int) pivot[1];
         int coluna = (int) pivot[2];
@@ -245,10 +259,16 @@ public class Simplex {
 
                 matriz[i][j] = matriz[linha][j] * (-matriz[i][coluna]) + matriz[i][j];
             }
-            matriz[i][coluna] = 0;
+            matriz[i][coluna] = 0.0;
         }
     }
-
+    /**
+     * 
+     * @param matriz
+     * @param cabecalho
+     * @param numLinhasMatriz
+     * @throws FileNotFoundException 
+     */
     public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever;
@@ -267,11 +287,16 @@ public class Simplex {
         }
         escrever.close();
     }
-
+    /**
+     * 
+     * @param matriz
+     * @param numeroLinhasFicheiro
+     * @param numeroColunasFicheiro
+     * @param variaveisBase 
+     */
     public static void imprimeMatrizConsola(double[][] matriz, int numeroLinhasFicheiro, int numeroColunasFicheiro, String[] variaveisBase) {
-        int i = 0, j = 0;
-        for (i = 0; i < numeroLinhasFicheiro; i++) {
-            for (j = 0; j < numeroColunasFicheiro; j++) {
+        for (int i = 0; i < numeroLinhasFicheiro; i++) {
+            for (int j = 0; j < numeroColunasFicheiro; j++) {
                 System.out.printf("%3.2f%s", matriz[i][j], " ");
             }
             System.out.println();
@@ -294,21 +319,28 @@ public class Simplex {
         escrever.format("%n");
         escrever.close();
     }
-
+    /**
+     * 
+     * @param matriz
+     * @param numeroColunasMatriz
+     * @param numeroLinhasMatriz
+     * @param cabecalho
+     * @param variaveisBase
+     * @throws FileNotFoundException 
+     */
     public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException {
 
-        int j = 0;
         boolean temNegativos = false;
         do {
-            int colunaPivot = variavelEntrada(numLinhasMatriz, matriz);
+            int colunaPivot = variavelEntrada(numLinhasMatriz, numColunasMatriz, matriz);
             double[] pivot = procurarVariavelSaida(numLinhasMatriz, matriz, colunaPivot, numColunasMatriz);
             atualizarVariaveisBase(cabecalho, variaveisBase, pivot);
             temNegativos = false;
-            dividirLinhaPivot(pivot, numLinhasMatriz, matriz);
+            dividirLinhaPivot(pivot, numColunasMatriz, matriz);
             anulaLinhas(pivot, matriz, numLinhasMatriz, numColunasMatriz);
             escreveFicheiroTexto(matriz, cabecalho, numLinhasMatriz);
             imprimeMatrizConsola(matriz, numLinhasMatriz, numColunasMatriz, variaveisBase);
-            for (j = 0; j < numColunasMatriz - 1; j++) {
+            for (int j = 0; j < numColunasMatriz - 1; j++) {
                 if (matriz[numLinhasMatriz - 1][j] < 0) {
                     temNegativos = true;
                 }
@@ -424,5 +456,11 @@ public class Simplex {
             }
         }
         escrever.close();
+    }
+    public static void maximizacao() throws FileNotFoundException{
+       File ficheiro = new File(nomeFicheiroSaida);
+       Formatter escrever = new Formatter(ficheiro); 
+       escrever.format("%24s%n", "Problema de Maximização!");
+       System.out.println("Problema de Maximização!");
     }
 }
