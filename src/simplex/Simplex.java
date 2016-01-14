@@ -180,10 +180,10 @@ public class Simplex {
     public static double[] procurarVariavelSaida(int numeroLinhas, double[][] matriz, int colunaPivot, int numeroColunas) {
         double pivot[] = new double[3];
         pivot[2] = colunaPivot;
-        double linhaPivot = 0;
-        double pivotTemp = 0;
+        double linhaPivot = 0.0;
+        double pivotTemp = 0.0;
         int i = 0;
-        double temp = 0;
+        double temp = 0.0;
         while (i < numeroLinhas - 1 && ((matriz[i][numeroColunas - 1]) / (matriz[i][colunaPivot]) < 0)) {
             i++;
         }
