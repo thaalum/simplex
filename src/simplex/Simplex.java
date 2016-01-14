@@ -22,7 +22,7 @@ public class Simplex {
         nomeFicheiroSaida = args[1];
         numLinhasMatriz = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
         String matrizTemp[] = retornaMatrizTempValidada(nomeFicheiroEntrada, numLinhasMatriz);
-        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)] + 1);
+        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]) + 1;
         String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
@@ -232,7 +232,7 @@ public class Simplex {
      
     public static void dividirLinhaPivot(double[] pivot, int numeroColunas, double[][] matriz) {
         int linhaPivot = (int) pivot[1];
-        for (int i = 0; i < numeroColunas + 2; i++) {
+        for (int i = 0; i < numeroColunas; i++) {
             matriz[linhaPivot][i] = (matriz[linhaPivot][i] / pivot[0]);
         }
     }
