@@ -23,18 +23,15 @@ public class TestesUnitarios {
     }
 
     public static void testeProcurarVariavelSaida() {
-        int numeroLinhas = 5, colunaPivot = 0;
+        int numeroLinhas = 4, colunaPivot = 1, numeroColunas=6;
         double pivot[] = new double[3];
-        double[][] matriz = {
-            {2, -5, 2, -5, -45},
-            {0, 2, 0, 2, -6},
-            {1, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0},
-            {0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 0},
-            {5, 4, 5, 4, 0},};
-        //pivot = Simplex.procurarVariavelSaida(numeroLinhas, matriz, colunaPivot);
-        if (pivot[0] == 2 && pivot[1] == 0 && pivot[2] == 0) {
+        double matriz[][] = {
+            {-1, 1, 1, 0, 0, 11},
+            {1, 1, 0, 1, 0, 27},
+            {2, 5, 0, 0, 1, 90},
+            {-4, -6, 0, 0, 0, 0},};
+        pivot = Simplex.procurarVariavelSaida(numeroLinhas, matriz, colunaPivot, numeroColunas);
+        if (pivot[0] == 1 && pivot[1] == 0 && pivot[2] == 1) {
             System.out.println("1-testeProcurarVariavelSaida retorna valor correto");
         } else {
             System.out.println("0-testeProcurarVariavelSaida retorna valor incorreto");
@@ -43,18 +40,15 @@ public class TestesUnitarios {
     }
 
     public static void testeDividirLinhaPivot() {
-        double[] pivot = {2, 0, 0};
-        int numeroLinhas = 5;
-        double[][] matriz = {
-            {2, -5, 2, -5, -45},
-            {0, 2, 0, 2, -6},
-            {1, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0},
-            {0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 0},
-            {5, 4, 5, 4, 0},};
+        double[] pivot = {1, 0, 1};
+        int numeroLinhas = 4;
+        double matriz[][] = {
+            {-1, 1, 1, 0, 0, 11},
+            {1, 1, 0, 1, 0, 27},
+            {2, 5, 0, 0, 1, 90},
+            {-4, -6, 0, 0, 0, 0},};
         Simplex.dividirLinhaPivot(pivot, numeroLinhas, matriz);
-        if (matriz[0][0] == 1 && matriz[0][2] == 1 / 2 && matriz[0][6] == 5 / 2) {
+        if (matriz[0][1] == 1 && matriz[0][2] == 1 && matriz[0][5] == 11) {
             System.out.println("1-testeDividirLinhaPivot retorna valor correto");
         } else {
             System.out.println("0-testeDividirLinhaPivot retorna valor incorreto");
@@ -62,17 +56,14 @@ public class TestesUnitarios {
     }
 
     public static void testeVariavelEntrada() {
-        double[][] matriz = {
-            {2, -5, 2, -5, -45},
-            {0, 2, 0, 2, -6},
-            {1, 0, 0, 0, 0},
-            {0, 1, 0, 0, 0},
-            {0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 0},
-            {5, 4, 5, 4, 0},};
-        int numeroLinhas = 5;
-        int colunaPivot = Simplex.variavelEntrada(numeroLinhas, matriz);
-        if (colunaPivot == 0) {
+        double matriz[][] = {
+            {-1, 1, 1, 0, 0, 11},
+            {1, 1, 0, 1, 0, 27},
+            {2, 5, 0, 0, 1, 90},
+            {-4, -6, 0, 0, 0, 0},};
+        int numeroLinhas = 4, numeroColunas=6;
+        int colunaPivot = Simplex.variavelEntrada(numeroLinhas, numeroColunas, matriz);
+        if (colunaPivot == 1) {
             System.out.println("1-testeVariavelEntrada retorna valor correto");
         } else {
             System.out.println("0-testeDVariavelEntrada retorna valor incorreto");
@@ -138,7 +129,7 @@ public class TestesUnitarios {
         testeRetornaNumLinhasFicheiro();
         testeanulaLinhas();
         testetransposta();
-        //testeProcurarVariavelSaida();
+        testeProcurarVariavelSaida();
         testeDividirLinhaPivot();
         testeVariavelEntrada();
 
