@@ -22,13 +22,13 @@ public class Simplex {
         nomeFicheiroSaida = args[1];
         numLinhasMatriz = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
         String matrizTemp[] = retornaMatrizTempValidada(nomeFicheiroEntrada, numLinhasMatriz);
-        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)] + 1);
-        String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
-        String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
+        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]) + 1;       
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
         TestesUnitarios.executarTestes();
         // se for maxi continua se for mini salta pra classe minimizaçao main
         maximizacao();
+        String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
+        String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
         verificaLinhaZ(matriz, numColunasMatriz, numLinhasMatriz, cabecalho, variaveisBase);
         
 
@@ -232,7 +232,7 @@ public class Simplex {
      
     public static void dividirLinhaPivot(double[] pivot, int numeroColunas, double[][] matriz) {
         int linhaPivot = (int) pivot[1];
-        for (int i = 0; i < numeroColunas + 2; i++) {
+        for (int i = 0; i < numeroColunas; i++) {
             matriz[linhaPivot][i] = (matriz[linhaPivot][i] / pivot[0]);
         }
     }
@@ -271,8 +271,7 @@ public class Simplex {
      */
     public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
-        Formatter escrever;
-        escrever = new Formatter(ficheiro);
+        Formatter escrever = new Formatter(ficheiro);
         cabecalho(cabecalho);
 
         for (int i = 0; i < numLinhasMatriz; i++) {
@@ -313,10 +312,10 @@ public class Simplex {
     public static void cabecalho(String[] cabecalho) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever = new Formatter(ficheiro);
-        for (int i = 0; i < cabecalho.length; i++) {
-            escrever.format("%5s", cabecalho[i]);
+        for (int i = 0; i < cabecalho.length-1; i++) {
+            escrever.format("%s%s%s%2s", " "," ", " ",cabecalho[i]);
         }
-        escrever.format("%n");
+        escrever.format("\n");
         escrever.close();
     }
     /**
