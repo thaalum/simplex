@@ -21,7 +21,7 @@ public class Simplex {
         nomeFicheiroEntrada = args[0];
         nomeFicheiroSaida = args[1];
         numLinhasMatriz = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
-        String matrizTemp[] = retornaMatrizTemp(nomeFicheiroEntrada, numLinhasMatriz);
+        String matrizTemp[] = retornaMatrizTempValidada(nomeFicheiroEntrada, numLinhasMatriz);
         numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)] + 1);
         String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
@@ -56,19 +56,29 @@ public class Simplex {
      * @return
      * @throws FileNotFoundException
      */
-    public static String[] retornaMatrizTemp(String ficheiro, int numLinhas) throws FileNotFoundException {
+    public static String[] retornaMatrizTempValidada(String ficheiro, int numLinhas) throws FileNotFoundException {
         String[] matrizTemp = new String[numLinhas];
         Scanner ler = new Scanner(new File(ficheiro));
-        int i = 0;
-        while (ler.hasNextLine()) {
+        for(int i = 0;i<numLinhas;i++){
             String aux = ler.nextLine();
-            if (!aux.isEmpty()) {
-                matrizTemp[i] = aux.replaceAll("\\s", "");
-                matrizTemp[i] = aux.replaceAll(",", "\\.");
-                matrizTemp[i] = matrizTemp[i].replaceAll("[<|≤]", "=");
-                matrizTemp[i] = matrizTemp[i].replaceAll("[>|≥]", "=");
-                i++;
+            matrizTemp[i]= aux;
+        }
+        int i = 0;
+        if (!Validacoes.verificaEspacosEmBranco(matrizTemp, numLinhasMatriz)) {
+            while (ler.hasNextLine()) {
+                String aux = ler.nextLine();
+                if (!aux.isEmpty()) {
+                    matrizTemp[i] = aux.replaceAll("\\s", "");
+                    matrizTemp[i] = aux.replaceAll(",", "\\.");
+                    i++;
+                }
             }
+        }
+        if (Validacoes.verificaCasasDecimais(matrizTemp, numLinhasMatriz)){
+            System.out.println("Mais de duas casas decimais!!");
+        }
+        if (!Validacoes.verificaFuncaoRestricao(matrizTemp, numLinhasMatriz)){
+            System.out.println("Erro funçao obj ou restricao!!");
         }
         return matrizTemp;
     }
@@ -239,7 +249,7 @@ public class Simplex {
         }
     }
 
-public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
+    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever;
         escrever = new Formatter(ficheiro);
