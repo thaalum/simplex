@@ -21,9 +21,10 @@ public class minimizacao {
     public static void main(String[] args) {
         TestesUnitarios.testetransposta();
         double matrizTransposta[][]= transposta(matriz);
+        String cabecalhoMin []= new String[numColunasMatriz];
         double matrizMin [][]=//metodo q adiciona variaveis folga a matriz
         
-        String cabecalhoMin[] = criarCabecalhoMatrizMin(numColunasMatriz, numVariaveis);
+        cabecalhoMin = criarCabecalhoMatrizMin(numColunasMatriz, numVariaveis);
         String variaveisBaseMin[] = Simplex.criarVectorVariaveis(numLinhasMatriz);
         minimizacao();
         verificaLinhaZMin(matrizMin, numColunasMatriz, numLinhasMatriz, cabecalhoMin, variaveisBaseMin);
