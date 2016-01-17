@@ -26,10 +26,11 @@ public class Simplex {
         String matrizTemp[] = retornaMatrizTempValidada(nomeFicheiroEntrada, numLinhasMatriz);
         numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]) + 1;
         numVariaveis = Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]);
-        matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
+        
         TestesUnitarios.executarTestes();
         // se for maxi continua se for mini salta pra classe minimizaçao main
         //minimizacao.main(args);
+        matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
         maximizacao();
         String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz, numVariaveis);
