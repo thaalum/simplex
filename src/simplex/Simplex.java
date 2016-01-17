@@ -3,7 +3,7 @@ package simplex;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
-
+import java.text.DecimalFormat; 
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -285,17 +285,19 @@ public class Simplex {
             File file = new File(nomeFicheiroSaida);
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
-            String temp = null;
+            
 
             for (int i = 0; i < numLinhasMatriz; i++) {
-                bw.write("\n");
+                bw.newLine();
                 for (int j = 0; j < matriz[i].length; j++) {
-                    temp = String.valueOf(matriz[i][j]);
-                    bw.write(temp);
+                    DecimalFormat dec = new DecimalFormat("0.##");
+                    String temp = dec.format(matriz[i][j]);
+                    
+                    bw.write(temp + " | ");
 
                 }
                 if (i == matriz.length) {
-                    bw.write("\n");
+                    bw.newLine();
                 }
             }
 
