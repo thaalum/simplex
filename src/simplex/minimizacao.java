@@ -8,6 +8,10 @@ package simplex;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Formatter;
+import static simplex.Simplex.numLinhasMatriz;
+import static simplex.Simplex.numColunasMatriz;
+import static simplex.Simplex.numVariaveis;
+
 /**
  *
  * @author teixe
@@ -18,8 +22,8 @@ public class minimizacao {
         TestesUnitarios.testetransposta();
         double matrizTransposta[][]= transposta(matriz);
         double matrizMin [][]=//metodo q adiciona variaveis folga a matriz
-        int numVariaveis=//metodo q retorna numero de variaveis da matriz
-        String cabecalhoMin[]=criarCabecalhoMatrizMin(numcolunas, numVariaveis);
+        
+        String cabecalhoMin[] = criarCabecalhoMatrizMin(numColunasMatriz, numVariaveis);
         String variaveisBaseMin[] = Simplex.criarVectorVariaveis(numLinhasMatriz);
         minimizacao();
         verificaLinhaZMin(matrizMin, numColunasMatriz, numLinhasMatriz, cabecalhoMin, variaveisBaseMin);
@@ -43,7 +47,7 @@ public class minimizacao {
     }
       public static String[] criarCabecalhoMatrizMin(int numColunas, int numVariavies) {
         String cabecalhoMin[] = new String[numColunas];
-        for(int j=0; j< numVariaveis; i++){
+        for(int j=0; j< numVariaveis; j++){
               String variavel= "Y"+j;
               cabecalhoMin[j]=variavel;
         }
@@ -74,6 +78,6 @@ public class minimizacao {
                 }
             }
         } while (temNegativos);
-        Simplex.solucaoBasica(numLinhasMatriz, variaveisBaseMin, numColunasMatriz);
+        Simplex.solucaoBasica(numLinhasMatriz, variaveisBaseMin, numColunasMatriz, numVariaveis);
     }
 }

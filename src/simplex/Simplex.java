@@ -14,6 +14,7 @@ public class Simplex {
     public static String nomeFicheiroSaida;
     public static int numLinhasMatriz;
     public static int numColunasMatriz;
+    public static int numVariaveis;
     public static double[][] matriz;
     public static String nomeFicheiroErros = "logErros.txt";
 
@@ -23,13 +24,14 @@ public class Simplex {
         numLinhasMatriz = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
         String matrizTemp[] = retornaMatrizTempValidada(nomeFicheiroEntrada, numLinhasMatriz);
         numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]) + 1;
-
+        numVariaveis = Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]);
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
         TestesUnitarios.executarTestes();
         // se for maxi continua se for mini salta pra classe minimizaçao main
+        //minimizacao.main(args);
         maximizacao();
         String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
-        String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz);
+        String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz, numVariaveis);
         verificaLinhaZ(matriz, numColunasMatriz, numLinhasMatriz, cabecalho, variaveisBase);
         
 
@@ -301,7 +303,7 @@ public class Simplex {
             }
             System.out.println();
         }
-
+        System.out.println();
     }
 
     /**
@@ -346,7 +348,7 @@ public class Simplex {
                 }
             }
         } while (temNegativos);
-        solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz);
+        solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz, numVariaveis);
     }
 
     /**
@@ -358,26 +360,30 @@ public class Simplex {
     public static String[] criarVectorVariaveis(int numeroLinhas) {
         String variaveisBase[] = new String[numeroLinhas - 1];
         for (int i = 0; i < numeroLinhas - 1; i++) {
-            String folga = "s" + i;
+            String folga = "S" + i;
             variaveisBase[i] = folga;
         }
         return variaveisBase;
     }
 
     /**
-     * cria uma matriz com com os valores do cabeçalho
-     *
+     * 
      * @param numColunas
-     * @return
+     * @param numVariavies
+     * @return 
      */
-    public static String[] criarCabecalhoMatriz(int numColunas) {
+   public static String[] criarCabecalhoMatriz(int numColunas, int numVariavies) {
         String cabecalho[] = new String[numColunas];
-        cabecalho[0] = "X1";
-        cabecalho[1] = "X2";
+        for(int j=0; j< numVariaveis; j++){
+              String variavel= "X"+j;
+              cabecalho[j]=variavel;
+        }
         cabecalho[numColunas - 1] = "b";
-        for (int i = 2; i < numColunas - 1; i++) {
-            String folga = "S" + i;
+        int k=1;
+        for (int i = numVariaveis; i < numColunas - 1; i++) {
+            String folga = "S"+k;
             cabecalho[i] = folga;
+            k++;
         }
         return cabecalho;
     }
@@ -403,7 +409,7 @@ public class Simplex {
      * @param numColunas
      * @throws FileNotFoundException
      */
-    public static void solucaoBasica(int numeroLinhas, String[] variaveisBase, int numColunas) throws FileNotFoundException {
+    public static void solucaoBasica(int numeroLinhas, String[] variaveisBase, int numColunas, int numVariaveis) throws FileNotFoundException {
         // Escrever solução como (x1,x2,s1,s2.)=(_,_,_,_)
         File ficheiro = new File(nomeFicheiroSaida);
         Formatter escrever = new Formatter(ficheiro);
