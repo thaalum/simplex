@@ -23,7 +23,7 @@ import static simplex.Simplex.numVariaveis;
  */
 public class minimizacao {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         TestesUnitarios.testetransposta();
         double matrizTransposta[][]= transposta(matriz);
         String cabecalhoMin []= new String[numColunasMatriz];
