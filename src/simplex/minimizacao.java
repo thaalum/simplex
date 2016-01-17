@@ -5,9 +5,13 @@
  */
 package simplex;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Formatter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import static simplex.Simplex.nomeFicheiroSaida;
 import static simplex.Simplex.numLinhasMatriz;
 import static simplex.Simplex.numColunasMatriz;
 import static simplex.Simplex.numVariaveis;
@@ -18,7 +22,7 @@ import static simplex.Simplex.numVariaveis;
  */
 public class minimizacao {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         TestesUnitarios.testetransposta();
         double matrizTransposta[][]= transposta(matriz);
         String cabecalhoMin []= new String[numColunasMatriz];
@@ -39,14 +43,22 @@ public class minimizacao {
         }
         return transposta;
     }
-     public static void minimizacao()throws FileNotFoundException{
-       File ficheiro = new File(nomeFicheiroSaida);
-       Formatter escrever = new Formatter(ficheiro); 
-       escrever.format("%24s%n", "Problema de Minimização!");
-       System.out.println("Problema de Minimização!");
-       escrever.close();
+     public static void minimizacao() throws FileNotFoundException, IOException {
+        System.out.println("Problema de Minimização!");
+        try{
+        File ficheiro = new File(nomeFicheiroSaida);
+        FileWriter fileWriter = new FileWriter(ficheiro, true);
+        BufferedWriter escrever = new BufferedWriter(fileWriter);
+        escrever.write("Problema de Minimização!");
+        escrever.newLine();
+        escrever.newLine();
+        escrever.close();
+         }
+        catch(IOException ex) {
+           ex.printStackTrace();
+        }
     }
-      public static String[] criarCabecalhoMatrizMin(int numColunas, int numVariavies) {
+      public static String [] criarCabecalhoMatrizMin(int numColunas, int numVariavies) {
         String cabecalhoMin[] = new String[numColunas];
         for(int j=0; j< numVariaveis; j++){
               String variavel= "Y"+j;
@@ -61,7 +73,7 @@ public class minimizacao {
         }
         return cabecalhoMin;
     }
-       public static void verificaLinhaZMin(double[][] matrizMin, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalhoMin[], String variaveisBaseMin[]) throws FileNotFoundException {
+       public static void verificaLinhaZMin(double[][] matrizMin, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalhoMin[], String variaveisBaseMin[]) throws FileNotFoundException, IOException {
 
         boolean temNegativos = false;
         do {
@@ -79,6 +91,6 @@ public class minimizacao {
                 }
             }
         } while (temNegativos);
-        Simplex.solucaoBasica(numLinhasMatriz, variaveisBaseMin, numColunasMatriz, numVariaveis);
+        Simplex.solucaoBasica(numLinhasMatriz, variaveisBaseMin, numColunasMatriz, numVariaveis, cabecalhoMin);
     }
 }

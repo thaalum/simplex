@@ -3,7 +3,7 @@ package simplex;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
-import java.util.Formatter;
+
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +19,7 @@ public class Simplex {
     public static double[][] matriz;
     public static String nomeFicheiroErros = "logErros.txt";
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, IOException {
         nomeFicheiroEntrada = args[0];
         nomeFicheiroSaida = args[1];
         numLinhasMatriz = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
@@ -276,10 +276,10 @@ public class Simplex {
      * @param numLinhasMatriz
      * @throws FileNotFoundException
      */
-    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException {
+    public static void escreveFicheiroTexto(double[][] matriz, String[] cabecalho, int numLinhasMatriz) throws FileNotFoundException, IOException {
 
         //Formatter escrever = new Formatter(ficheiro);
-        cabecalho(cabecalho);
+        cabecalhoEscrever(cabecalho);
         try {
             // Assume default encoding.
             File file = new File(nomeFicheiroSaida);
@@ -330,14 +330,21 @@ public class Simplex {
      * @param cabecalho
      * @throws FileNotFoundException
      */
-    public static void cabecalho(String[] cabecalho) throws FileNotFoundException {
+    public static void cabecalhoEscrever(String[] cabecalho) throws FileNotFoundException, IOException {
         File ficheiro = new File(nomeFicheiroSaida);
-        Formatter escrever = new Formatter(ficheiro);
-        for (int i = 0; i < cabecalho.length - 1; i++) {
-            escrever.format("%s%s%s%2s", " ", " ", " ", cabecalho[i]);
+        try {
+        FileWriter fileWriter = new FileWriter(ficheiro, true);
+        BufferedWriter escrever = new BufferedWriter(fileWriter);
+        for (int i = 0; i < cabecalho.length-1; i++) {
+            escrever.write(cabecalho[i]);
+            escrever.write("  ");
         }
-        escrever.format("\n");
+        escrever.newLine();
         escrever.close();
+         }
+        catch(IOException ex) {
+           ex.printStackTrace();
+        }
     }
 
     /**
@@ -349,7 +356,7 @@ public class Simplex {
      * @param variaveisBase
      * @throws FileNotFoundException
      */
-    public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException {
+    public static void verificaLinhaZ(double[][] matriz, int numeroColunasMatriz, int numeroLinhasMatriz, String cabecalho[], String variaveisBase[]) throws FileNotFoundException, IOException {
 
         boolean temNegativos = false;
         do {
@@ -367,7 +374,7 @@ public class Simplex {
                 }
             }
         } while (temNegativos);
-        solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz, numVariaveis);
+        solucaoBasica(numLinhasMatriz, variaveisBase, numColunasMatriz, numVariaveis, cabecalho);
     }
 
     /**
@@ -422,71 +429,78 @@ public class Simplex {
     }
 
     /**
-     *
+     * 
      * @param numeroLinhas
      * @param variaveisBase
      * @param numColunas
+     * @param numVariaveis
+     * @param cabecalho
      * @throws FileNotFoundException
+     * @throws IOException 
      */
-    public static void solucaoBasica(int numeroLinhas, String[] variaveisBase, int numColunas, int numVariaveis) throws FileNotFoundException {
+    public static void solucaoBasica(int numeroLinhas, String[] variaveisBase, int numColunas, int numVariaveis, String []cabecalho) throws FileNotFoundException, IOException {
         // Escrever solução como (x1,x2,s1,s2.)=(_,_,_,_)
         File ficheiro = new File(nomeFicheiroSaida);
-        Formatter escrever = new Formatter(ficheiro);
-        escrever.format("%s%5s", "(", "X1,X2");
-        for (int i = 1; i < numeroLinhas; i++) {
-            String numFolga = String.valueOf(i);
-            String folga = ",S";
-            folga = folga.concat(numFolga);
-            escrever.format("%2s", folga);
+        try{
+        FileWriter fileWriter = new FileWriter(ficheiro, true);
+        BufferedWriter escrever = new BufferedWriter(fileWriter);  
+        escrever.write("(");
+        int i;
+        for (i = 0; i < cabecalho.length-2; i++) {
+            escrever.write(cabecalho[i]);
+            escrever.write(", ");
         }
-        escrever.format("%4s", ") = ");
-        double[] solucao = new double[numeroLinhas];
+        escrever.write(cabecalho[i+1]);
+        escrever.write(") = (");
+               
+        int[] solucao = new int[numColunas-1];
         int nEl = 0;
         int j = 0;
-        while (!variaveisBase[j].equals("X1") && j < variaveisBase.length) {
+        for (int k=0; k<cabecalho.length-1; k++){  
+        while (!variaveisBase[j].equals(cabecalho[k]) && j < variaveisBase.length) {
             j++;
         }
         if (j < variaveisBase.length) {
-            solucao[nEl] = matriz[j][numColunas - 1];
+            solucao[nEl] = (int)matriz[j][numColunas - 1];
             nEl++;
         } else {
             solucao[nEl] = 0;
             nEl++;
-            while (!variaveisBase[j].equals("X2")
-                    && j < variaveisBase.length) {
-                j++;
-            }
-            if (j < variaveisBase.length) {
-                solucao[nEl] = matriz[j][numColunas - 1];
-                nEl++;
-            } else {
-                solucao[0] = 0;
-                nEl++;
-                for (int i = 1; i < numeroLinhas; i++) {
-                    String folga = "S" + i;
-                    int x = 0;
-                    while (!variaveisBase[x].equals(folga) && x < variaveisBase.length) {
-                        x++;
-                    }
-
-                    if (x < variaveisBase.length) {
-                        solucao[nEl] = matriz[x][numColunas - 1];
-                        nEl++;
-                    } else {
-                        solucao[nEl] = 0;
-                        nEl++;
-                    }
-                    escrever.format("%s", solucao);
-                }
-            }
         }
+        }  int z;
+         for (z = 0; z < solucao.length-1; z++) {           
+             escrever.write(solucao[z]);
+             escrever.write(", ");             
+         }
+         escrever.write(solucao[z+1]);
+         escrever.write(") = Z = ");
+         int Z= (int)matriz[numeroLinhas-1][numColunas-1];
+         escrever.write(Z);
+         escrever.newLine();    
+        
         escrever.close();
+     }
+        catch(IOException ex) {
+           ex.printStackTrace();
+        }
     }
 
-    public static void maximizacao() throws FileNotFoundException {
-        File ficheiro = new File(nomeFicheiroSaida);
-        Formatter escrever = new Formatter(ficheiro);
-        escrever.format("%24s%n", "Problema de Maximização!");
+    public static void maximizacao() throws FileNotFoundException, IOException {
         System.out.println("Problema de Maximização!");
+        File ficheiro = new File(nomeFicheiroSaida);
+        try{
+        FileWriter fileWriter = new FileWriter(ficheiro, true);
+        BufferedWriter escrever = new BufferedWriter(fileWriter);
+        escrever.write("Problema de Maximização!");
+        escrever.newLine();
+        escrever.newLine();
+        escrever.close();
+         }
+        catch(IOException ex) {
+           ex.printStackTrace();
+        }
     }
+
+  
+     
 }
