@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import static simplex.Simplex.matriz;
 
 import static simplex.Simplex.nomeFicheiroSaida;
 import static simplex.Simplex.numLinhasMatriz;
@@ -26,12 +27,12 @@ public class minimizacao {
         TestesUnitarios.testetransposta();
         double matrizTransposta[][]= transposta(matriz);
         String cabecalhoMin []= new String[numColunasMatriz];
-        double matrizMin [][]=//metodo q adiciona variaveis folga a matriz
+        //double matrizMin [][]=//metodo q adiciona variaveis folga a matriz
         
         cabecalhoMin = criarCabecalhoMatrizMin(numColunasMatriz, numVariaveis);
         String variaveisBaseMin[] = Simplex.criarVectorVariaveis(numLinhasMatriz);
-        minimizacao();
-        verificaLinhaZMin(matrizMin, numColunasMatriz, numLinhasMatriz, cabecalhoMin, variaveisBaseMin);
+        //minimizacao();
+        verificaLinhaZMin(matrizTransposta, numColunasMatriz, numLinhasMatriz, cabecalhoMin, variaveisBaseMin);
     }
 
     public static double [][] transposta (double [][]matriz) {
