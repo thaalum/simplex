@@ -190,5 +190,6 @@ public class minimizacao {
         for (int z=0; z<numLinhasMatriz; z++){
             matrizMin[z][numColunasMatriz-1]=matrizTransposta[z][b];
         }
+        return matrizMin;
     }
 }
