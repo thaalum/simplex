@@ -28,16 +28,21 @@ public class Simplex {
         numVariaveis = Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]);
         
         TestesUnitarios.executarTestes();
-        // se for maxi continua se for mini salta pra classe minimizaçao main
-        //minimizacao.main(args);
+        int validacao= Validacoes.decideMaxMin(matrizTemp, numLinhasMatriz);
+        if(validacao==1){
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
         maximizacao();
         String variaveisBase[] = criarVectorVariaveis(numLinhasMatriz);
         String cabecalho[] = criarCabecalhoMatriz(numColunasMatriz, numVariaveis);
         verificaLinhaZ(matriz, numColunasMatriz, numLinhasMatriz, cabecalho, variaveisBase);
-
+        }
+        else{if(validacao==0){
+            minimizacao.main(args);
+        } 
+        
+        
     }
-
+    }
     /**
      *
      * @param String ficheiro

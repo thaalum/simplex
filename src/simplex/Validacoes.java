@@ -62,8 +62,8 @@ public class Validacoes {
     
     
     //Devolve 1 se for Maximização, 0 se for Minimização
-    public static boolean decideMaxMin(String matriz[], int numLinhasMatriz){
-        boolean maxMin=false;
+    public static int decideMaxMin(String matriz[], int numLinhasMatriz){
+        int maxMin=-1;
         boolean max=false;
         boolean min=false;
         for (int i = 0; i < numLinhasMatriz; i++) {
@@ -74,13 +74,16 @@ public class Validacoes {
             Matcher mMenor = encontraMenor.matcher(linha);
             if(mMaior.find()){
                 max=true;
+                maxMin=1;
             }
             else if(mMenor.find()){
                 min=true;
+                maxMin=0;
             }
         }
         if (max==min){
             System.out.println("Existem restrições erradas! (sinais >= ou <=)");
+            maxMin=-1;
         }
         return maxMin;
     }
