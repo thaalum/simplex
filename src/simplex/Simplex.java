@@ -22,7 +22,8 @@ public class Simplex {
         nomeFicheiroSaida = args[1];
         numLinhasMatriz = retornaNumLinhasFicheiro(nomeFicheiroEntrada);
         String matrizTemp[] = retornaMatrizTempValidada(nomeFicheiroEntrada, numLinhasMatriz);
-        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]) + 1;       
+        numColunasMatriz = numLinhasMatriz + Utilitarios.procuraNumeroVariaveis(matrizTemp[Utilitarios.procuraLinhaZ(matrizTemp, numLinhasMatriz)]) + 1;
+
         matriz = preencheMatriz(matrizTemp, numLinhasMatriz);
         TestesUnitarios.executarTestes();
         // se for maxi continua se for mini salta pra classe minimizaçao main

@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/teixe/OneDrive/Documents/NetBeansProjects/simplex/saida.txt</file>
-            <file>file:/C:/Users/teixe/OneDrive/Documents/NetBeansProjects/simplex/src/simplex/Simplex.java</file>
-            <file>file:/C:/Users/teixe/OneDrive/Documents/NetBeansProjects/simplex/entrada.txt</file>
-            <file>file:/C:/Users/teixe/OneDrive/Documents/NetBeansProjects/simplex/src/simplex/Utilitarios.java</file>
-            <file>file:/C:/Users/teixe/OneDrive/Documents/NetBeansProjects/simplex/src/simplex/TestesUnitarios.java</file>
-            <file>file:/C:/Users/teixe/OneDrive/Documents/NetBeansProjects/simplex/testeRetornaNumLinhasFicheiro1.txt</file>
+            <file>file:/C:/Users/Marilia/Documents/NetBeansProjects/simplex/simplex/src/simplex/TestesUnitarios.java</file>
+            <file>file:/C:/Users/Marilia/Documents/NetBeansProjects/simplex/simplex/src/simplex/minimizacao.java</file>
+            <file>file:/C:/Users/Marilia/Documents/NetBeansProjects/simplex/simplex/src/simplex/Utilitarios.java</file>
+            <file>file:/C:/Users/Marilia/Documents/NetBeansProjects/simplex/simplex/src/simplex/Validacoes.java</file>
+            <file>file:/C:/Users/Marilia/Documents/NetBeansProjects/simplex/simplex/src/simplex/Simplex.java</file>
         </group>
     </open-files>
 </project-private>
